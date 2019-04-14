@@ -1,0 +1,26 @@
+@(prestamo: Prestamo)
+
+<h1>Prestamo Finalizado</h1>
+
+<ul>
+    <li>
+        Id Usuario: @prestamo.getIdUsuario
+    </li>
+
+    <li>
+        Id Bicicleta: @prestamo.getIdBicicleta
+    </li>
+
+    <li>
+        Fecha Inicio Prestamo: @prestamo.getFechaInicio.toString
+    </li>
+
+    <li>
+        Fecha Fin Prestamo: @prestamo.getFechaFin.toString
+    </li>
+
+    <li>
+        Valor a pagar $: @prestamo.getValor  Pesos
+    </li>
+</ul>
+

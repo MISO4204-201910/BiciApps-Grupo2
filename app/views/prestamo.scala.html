@@ -1,0 +1,23 @@
+@(prestamo: Prestamo)
+
+<h1>Prestamos BiciApps</h1>
+
+<ul>
+    <li>
+       Tipo Prestamo: @prestamo.tipoPago.name()
+    </li>
+
+    <li>
+       Id Usuario: @prestamo.getIdUsuario
+    </li>
+
+    <li>
+       Id Bicicleta: @prestamo.getIdBicicleta
+    </li>
+
+    <li>
+       Fecha Inicio Prestamo: @prestamo.getFechaInicio.toString
+    </li>
+</ul>
+
+<input type="submit" onclick="location.href='@controllers.routes.HomeController.finalizarPrestamo';" value="Finalizar Prestamo" />
