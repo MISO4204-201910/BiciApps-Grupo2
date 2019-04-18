@@ -1,3 +1,0 @@
-GET /index                  controllers.kilometraje.HomeController.index()
-
-GET /assets/*file           controllers.Assets.at(path="/public/lib/myadmin", file)
