@@ -5,6 +5,8 @@
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
 
+->  /kilometraje kilometraje.Routes
+
 GET /prestamo/iniciar               controllers.HomeController.prestamoIniciar
 GET /prestamo/finalizar             controllers.HomeController.finalizarPrestamo
 

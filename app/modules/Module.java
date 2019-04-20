@@ -1,7 +1,6 @@
 package modules;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.name.Names;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigValue;
 import models.*;
