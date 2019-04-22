@@ -1,12 +1,8 @@
-package models;
+package models.prestamo;
 
 public class PrestamoFactory {
 
-    public PrestamoFactory(){
-
-    }
-
-    public Prestamo crear(TipoPago tipoPago) throws Exception {
+    public static Prestamo crear(TipoPago tipoPago) throws Exception {
         switch (tipoPago) {
             case Efectivo:
                 return new Efectivo();

@@ -1,14 +1,13 @@
 package controllers;
 
 
-import models.Prestamo;
-import models.TipoPago;
+import models.Configuracion;
+import models.prestamo.Prestamo;
+import models.prestamo.TipoPago;
 import play.i18n.MessagesApi;
 import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Controller;
-import play.mvc.Http;
 import play.mvc.Result;
-import play.mvc.Results;
 import respository.UserRepository;
 
 import javax.inject.Inject;
@@ -22,17 +21,17 @@ public class HomeController extends Controller {
 
 
     private final UserRepository userRepository;
-    private final Prestamo prestamo;
+    private final Configuracion configuracion;
     private final HttpExecutionContext httpExecutionContext;
     private final MessagesApi messagesApi;
 
     @Inject
     public HomeController(UserRepository userRepository,
-                          Prestamo prestamo,
+                          Configuracion configuracion,
                           HttpExecutionContext httpExecutionContext,
                           MessagesApi messagesApi) {
         this.userRepository = userRepository;
-        this.prestamo = prestamo;
+        this.configuracion = configuracion;
         this.httpExecutionContext = httpExecutionContext;
         this.messagesApi = messagesApi;
     }
@@ -42,19 +41,39 @@ public class HomeController extends Controller {
         }
 
         public Result prestamoIniciar() {
-            prestamo.setIdBicicleta(1L);
-            prestamo.setIdUsuario(2L);
-            return ok(views.html.prestamo.render(prestamo));
+            configuracion.prestamo.setIdBicicleta(1L);
+            configuracion.prestamo.setIdUsuario(2L);
+            return ok(views.html.prestamo.render(configuracion.prestamo));
         }
 
         public Result finalizarPrestamo() {
-        prestamo.finalizarViaje();
-        if (prestamo.tipoPago == TipoPago.Efectivo) {
-            return ok(views.html.prestamoEfectivo.render(prestamo));
-        } else if (prestamo.tipoPago == TipoPago.Gratuito) {
-            return ok(views.html.prestamoGratuito.render(prestamo));
-        } else {
-            return ok("Pago no encontrado");
+            configuracion.prestamo.finalizarViaje();
+            if (configuracion.prestamo.tipoPago == TipoPago.Efectivo) {
+                return ok(views.html.prestamoEfectivo.render(configuracion.prestamo));
+            } else if (configuracion.prestamo.tipoPago == TipoPago.Gratuito) {
+                return ok(views.html.prestamoGratuito.render(configuracion.prestamo));
+            } else {
+                return ok("Pago no encontrado");
+            }
         }
+
+        public Result registro() {
+            return ok(views.html.registro.render());
         }
+
+        public Result iniciarRegistro(String tipoRegistro) {
+            return ok(tipoRegistro);
+        }
+
+        /*public Result registroFacebook() {
+            return ok("Registro facebook");
+        }
+
+        public Result registroTelefono() {
+            return ok("Registro telefono");
+        }
+
+        public Result registroCorreo() {
+           return ok("Registro correo");
+        }*/
     }

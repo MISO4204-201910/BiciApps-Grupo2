@@ -1,4 +1,4 @@
-package models;
+package models.prestamo;
 
 import java.time.Instant;
 

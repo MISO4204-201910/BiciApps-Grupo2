@@ -4,6 +4,8 @@
 
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
+GET    /registro                    controllers.HomeController.registro
+GET    /registro/inicio             controllers.HomeController.iniciarRegistro(tipoRegistro: String)
 
 ->  /kilometraje kilometraje.Routes
 

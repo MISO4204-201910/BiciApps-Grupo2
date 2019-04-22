@@ -1,0 +1,10 @@
+@()
+
+@main("Regristro") {
+    <h1>Registro App</h1>
+
+    <input type="submit" onclick="location.href='@controllers.routes.HomeController.iniciarRegistro("telefono")';" value="Numero Telefonico" />
+    <input type="submit" onclick="location.href='@controllers.routes.HomeController.iniciarRegistro("correo")';" value="Correo" />
+    <input type="submit" onclick="location.href='@controllers.routes.HomeController.iniciarRegistro("facebook")';" value="Facebook" />
+
+}
