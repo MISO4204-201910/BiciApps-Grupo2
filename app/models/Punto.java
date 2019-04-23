@@ -3,7 +3,7 @@ package models;
 import javax.persistence.Entity;
 
 @Entity
-public class Puntos extends BaseModel{
+public class Punto extends BaseModel{
 
     private static final long serialVersionUID = 1L;
 

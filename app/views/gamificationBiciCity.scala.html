@@ -1,4 +1,4 @@
-@(user: User, puntos: Puntos)
+@()
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
@@ -26,26 +26,26 @@
 
 <body>
     <h2 >Consulta tus puntos</h2>
-    <h3> Hola @user.nombre @user.apellidos</h3>
+    <h3> Hola </h3>
     <div class="card" style="width: 300px;">
         <img class="card-img-top" src="https://bicycledutch.files.wordpress.com/2016/01/utrecht-main-cycle-routes.jpg?w=768&h=448">
             <div class="card-body">
                 <h5 class="card-title">Puntos por recorridos</h5>
                 <p class="card-text">Los puntos ganados por tus recomendaciones son: </p>
-                <p class="card-text" id="puntos">@puntos.puntosRecomendaciones</p>
+                <p class="card-text" id="puntos">50</p>
             </div>
     </div>
     <br><br>
     <div class="card" style="width: 300px;">
         <img class="card-img-top" src="https://images-na.ssl-images-amazon.com/images/I/51OZ%2BhlWm7L._SX425_.jpg">
             <div class="card-body">
-                <h5 class="card-title">Puntos por Kilometraje</h5>
+                <h5 class="card-title">Punto por Kilometraje</h5>
                 <p class="card-text">Los puntos ganados por tus kilometros son: </p>
-                <p class="card-text" id="puntos">@puntos.puntosKilometraje</p>
+                <p class="card-text" id="puntos">100</p>
             </div>
     </div>
-    <h4>Tus puntos totales son @puntos.puntosRecomendaciones + @puntos.puntosKilometraje  </h4>
-    <a href="/redimir" class="btn btn-primary">Redimir Puntos</a>
+
+    <a href="/redimir" class="btn btn-primary">Redimir Punto</a>
 
 </body>
 

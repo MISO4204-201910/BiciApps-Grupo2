@@ -9,9 +9,9 @@ GET    /registro/inicio             controllers.HomeController.iniciarRegistro(t
 
 ->  /kilometraje kilometraje.Routes
 
-GET /prestamo/iniciar               controllers.HomeController.prestamoIniciar
+GET /prestamo/iniciar     controllers.HomeController.prestamoIniciar(idUsuario: Long)
 GET /prestamo/finalizar             controllers.HomeController.finalizarPrestamo
-GET /gamificationBiciGov            controllers.HomeController.gamificationBiciGov
+GET /gamificationBiciGov            controllers.HomeController.gamificationBiciGov(idUsuario : Long)
 GET /gamificationBiciCity            controllers.HomeController.gamificationBiciCity
 GET /redimir                        controllers.HomeController.catalogoPremios
 

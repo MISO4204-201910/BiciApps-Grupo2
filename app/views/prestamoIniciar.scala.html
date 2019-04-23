@@ -1,0 +1,16 @@
+@(nombreUsuario: String, idUsuario: Long)
+
+<h1>Prestamo Bicicletas</h1>
+
+<ul>
+    <li>
+        Usuario: @nombreUsuario
+    </li>
+
+    <li>
+        <label for="codigo_bicicleta">Codigo Bicicleta:</label>
+        <input type="text" name="codigo_bicicleta" id="codigo_bicicleta">
+    </li>
+</ul>
+
+<input type="submit" onclick="location.href='@controllers.routes.HomeController.finalizarPrestamo';" value="Finalizar Prestamo" />

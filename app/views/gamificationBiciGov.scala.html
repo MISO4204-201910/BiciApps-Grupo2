@@ -1,4 +1,4 @@
-@(usuario: User, puntos: Puntos)
+@(idUsuario: Long, puntos: List[Punto])
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
@@ -26,13 +26,13 @@
 
 <body>
     <h2 >Consulta tus puntos</h2>
-    <h3>Hola Usuario @usuario.nombre @usuario.apellidos </h3>
+    <h3>Hola Usuario @idUsuario</h3>
     <div class="card" style="width: 300px;">
         <img class="card-img-top" src="https://bicycledutch.files.wordpress.com/2016/01/utrecht-main-cycle-routes.jpg?w=768&h=448">
             <div class="card-body">
                 <h5 class="card-title">Puntos por recorridos</h5>
                 <p class="card-text">Los puntos ganados por tus recorridos son: </p>
-                <p class="card-text" id="puntos">@puntos.puntosRecorridos</p>
+                <p class="card-text" id="puntos">@puntos.head.puntosRecorridos</p>
                 <a href="/redimir" class="btn btn-primary">Redimir Puntos</a>
             </div>
     </div>

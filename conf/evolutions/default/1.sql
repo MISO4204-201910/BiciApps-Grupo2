@@ -2,28 +2,29 @@
 
 # --- !Ups
 
-create table users (
+create table user (
   id                        bigint not null,
-  numeroDocumento           varchar(255),
-  tipoDocumento             varchar(255),
+  numero_documento           varchar(255),
+  tipo_documento             varchar(255),
   nombre                    varchar(255),
   apellidos                 varchar(255),
-  fechaNacimiento           timestamp,
+  fecha_nacimiento           timestamp,
   constraint pk_users primary key (id));
 
-  create table bicicletas (
+  create table bicicleta (
   id                        bigint not null,
   codigo                    varchar(255),
   constraint pk_bicicletas primary key (id));
 
-  create table puntos (
-  id                        bigint not null,
-  puntosKilometraje               bigint ,
-  puntosRecorridos                bigint ,
-  puntosRecomendaciones           bigint ,
+  create table punto (
+  id                              bigint not null,
+  id_usuario                      bigint not null,
+  puntos_kilometraje               bigint ,
+  puntos_recorridos                bigint ,
+  puntos_recomendaciones           bigint ,
   constraint pk_puntos primary key (id));
 
-  create table prestamos (
+  create table prestamo (
   id                        bigint not null,
   id_usuario                bigint not null,
   id_bicicpleta             bigint not null,
@@ -38,4 +39,6 @@ create table users (
 # --- !Downs
 
 
-drop table if exists users;
+drop table if exists user;
+drop table if exists bicicleta;
+drop table if exists prestamo;

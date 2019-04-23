@@ -11,11 +11,13 @@ import play.i18n.MessagesApi;
 import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Controller;
 import play.mvc.Result;
+import respository.PuntoRepository;
 import respository.UserRepository;
 import scala.collection.Seq;
 import scala.collection.JavaConverters;
 
 import javax.inject.Inject;
+import java.util.concurrent.CompletionStage;
 
 
 /**
@@ -26,16 +28,19 @@ public class HomeController extends Controller {
 
 
     private final UserRepository userRepository;
+    private final PuntoRepository puntoRepository;
     private final Configuracion configuracion;
     private final HttpExecutionContext httpExecutionContext;
     private final MessagesApi messagesApi;
 
     @Inject
     public HomeController(UserRepository userRepository,
+                          PuntoRepository puntoRepository,
                           Configuracion configuracion,
                           HttpExecutionContext httpExecutionContext,
                           MessagesApi messagesApi) {
         this.userRepository = userRepository;
+        this.puntoRepository= puntoRepository;
         this.configuracion = configuracion;
         this.httpExecutionContext = httpExecutionContext;
         this.messagesApi = messagesApi;
@@ -45,10 +50,15 @@ public class HomeController extends Controller {
             return ok(views.html.index.render());
         }
 
-        public Result prestamoIniciar() {
-            configuracion.prestamo.setIdBicicleta(1L);
-            configuracion.prestamo.setIdUsuario(2L);
-            return ok(views.html.prestamo.render(configuracion.prestamo));
+        public CompletionStage<Result> prestamoIniciar(Long idUsuario) {
+            return userRepository.lookup(idUsuario).thenApplyAsync( optUser -> {
+                if (optUser.isPresent()) {
+                  String nombreCompleto = optUser.get().nombre + " " + optUser.get().apellidos;
+                    return ok(views.html.prestamoIniciar.render(nombreCompleto, idUsuario));
+                } else {
+                    return notFound(views.html.notFound.render(idUsuario));
+                }
+            }, httpExecutionContext.current());
         }
 
         public Result finalizarPrestamo() {
@@ -83,13 +93,16 @@ public class HomeController extends Controller {
            return ok("Registro correo");
         }*/
 
-        public Result gamificationBiciGov(){
-            return ok(views.html.gamificationBiciGov.render());
+        public CompletionStage<Result> gamificationBiciGov(Long idUsuario){
+            return puntoRepository.lookupByUserId(idUsuario).thenApplyAsync( listaPuntos -> {
+                return ok(views.html.gamificationBiciGov.render(idUsuario, listaPuntos));
+            }, httpExecutionContext.current());
+            //return ok(views.html.gamificationBiciGov.render());
         }
         public Result gamificationBiciCity(){
-            User usuario = new User("12345678","CC","Alejandro","Martinez",1986-03-10);
+            //User usuario = new User("12345678","CC","Alejandro","Martinez",1986-03-10);
 
-            return ok(views.html.gamificationBiciCity.render(usuario));
+            return ok(views.html.gamificationBiciCity.render());
         }
         public Result catalogoPremios(){
             return ok(views.html.catalogoPremios.render());
