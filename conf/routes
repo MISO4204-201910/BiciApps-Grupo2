@@ -9,7 +9,7 @@ GET    /registro/inicio             controllers.HomeController.iniciarRegistro(t
 
 ->  /kilometraje kilometraje.Routes
 
-GET /prestamo/iniciar               controllers.HomeController.prestamoIniciar
+GET /prestamo/iniciar     controllers.HomeController.prestamoIniciar(idUsuario: Long)
 GET /prestamo/finalizar             controllers.HomeController.finalizarPrestamo
 
 # Map static resources from the /public folder to the /assets URL path

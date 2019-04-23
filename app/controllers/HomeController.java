@@ -15,6 +15,7 @@ import scala.collection.Seq;
 import scala.collection.JavaConverters;
 
 import javax.inject.Inject;
+import java.util.concurrent.CompletionStage;
 
 
 /**
@@ -44,10 +45,15 @@ public class HomeController extends Controller {
             return ok(views.html.index.render());
         }
 
-        public Result prestamoIniciar() {
-            configuracion.prestamo.setIdBicicleta(1L);
-            configuracion.prestamo.setIdUsuario(2L);
-            return ok(views.html.prestamo.render(configuracion.prestamo));
+        public CompletionStage<Result> prestamoIniciar(Long idUsuario) {
+            return userRepository.lookup(idUsuario).thenApplyAsync( optUser -> {
+                if (optUser.isPresent()) {
+                  String nombreCompleto = optUser.get().nombre + " " + optUser.get().apellidos;
+                    return ok(views.html.prestamoIniciar.render(nombreCompleto, idUsuario));
+                } else {
+                    return notFound(views.html.notFound.render(idUsuario));
+                }
+            }, httpExecutionContext.current());
         }
 
         public Result finalizarPrestamo() {
