@@ -1,0 +1,52 @@
+@(user: User, puntos: Puntos)
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+<meta charset="UTF-8">
+<title>Configurador Bike App</title>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static "/css/main.css"%}">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <script src="{% static "js/constants.js"%}"></script>
+    <script src="{% static "js/gamification.js"%}"></script>
+
+
+</head>
+
+<body>
+    <h2 >Consulta tus puntos</h2>
+    <h3> Hola @user.nombre @user.apellidos</h3>
+    <div class="card" style="width: 300px;">
+        <img class="card-img-top" src="https://bicycledutch.files.wordpress.com/2016/01/utrecht-main-cycle-routes.jpg?w=768&h=448">
+            <div class="card-body">
+                <h5 class="card-title">Puntos por recorridos</h5>
+                <p class="card-text">Los puntos ganados por tus recomendaciones son: </p>
+                <p class="card-text" id="puntos">@puntos.puntosRecomendaciones</p>
+            </div>
+    </div>
+    <br><br>
+    <div class="card" style="width: 300px;">
+        <img class="card-img-top" src="https://images-na.ssl-images-amazon.com/images/I/51OZ%2BhlWm7L._SX425_.jpg">
+            <div class="card-body">
+                <h5 class="card-title">Puntos por Kilometraje</h5>
+                <p class="card-text">Los puntos ganados por tus kilometros son: </p>
+                <p class="card-text" id="puntos">@puntos.puntosKilometraje</p>
+            </div>
+    </div>
+    <h4>Tus puntos totales son @puntos.puntosRecomendaciones + @puntos.puntosKilometraje  </h4>
+    <a href="/redimir" class="btn btn-primary">Redimir Puntos</a>
+
+</body>
+
+</html>

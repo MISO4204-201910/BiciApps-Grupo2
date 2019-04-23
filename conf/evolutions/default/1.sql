@@ -16,6 +16,13 @@ create table users (
   codigo                    varchar(255),
   constraint pk_bicicletas primary key (id));
 
+  create table puntos (
+  id                        bigint not null,
+  puntosKilometraje               bigint ,
+  puntosRecorridos                bigint ,
+  puntosRecomendaciones           bigint ,
+  constraint pk_puntos primary key (id));
+
   create table prestamos (
   id                        bigint not null,
   id_usuario                bigint not null,

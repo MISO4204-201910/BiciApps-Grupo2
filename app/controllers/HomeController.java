@@ -2,6 +2,7 @@ package controllers;
 
 
 import models.Configuracion;
+import models.User;
 import models.prestamo.Prestamo;
 import models.prestamo.TipoPago;
 import models.registro.Registro;
@@ -81,4 +82,16 @@ public class HomeController extends Controller {
         public Result registroCorreo() {
            return ok("Registro correo");
         }*/
+
+        public Result gamificationBiciGov(){
+            return ok(views.html.gamificationBiciGov.render());
+        }
+        public Result gamificationBiciCity(){
+            User usuario = new User("12345678","CC","Alejandro","Martinez",1986-03-10);
+
+            return ok(views.html.gamificationBiciCity.render(usuario));
+        }
+        public Result catalogoPremios(){
+            return ok(views.html.catalogoPremios.render());
+        }
     }

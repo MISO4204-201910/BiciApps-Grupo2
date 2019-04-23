@@ -27,5 +27,4 @@ public class User extends BaseModel{
     @Formats.DateTime(pattern="yyyy-MM-dd")
     public Date fechaNacimiento;
 
-
 }
