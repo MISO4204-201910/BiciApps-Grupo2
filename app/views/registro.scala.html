@@ -1,10 +1,24 @@
-@()
+@import models.registro.Registro
+@import models.registro.TipoRegistro
+
+@(registros: Seq[Registro])
 
 @main("Regristro") {
     <h1>Registro App</h1>
 
-    <input type="submit" onclick="location.href='@controllers.routes.HomeController.iniciarRegistro("telefono")';" value="Numero Telefonico" />
-    <input type="submit" onclick="location.href='@controllers.routes.HomeController.iniciarRegistro("correo")';" value="Correo" />
-    <input type="submit" onclick="location.href='@controllers.routes.HomeController.iniciarRegistro("facebook")';" value="Facebook" />
+    @for(registro <- registros) {
+
+        @if(registro.getRegistro == TipoRegistro.Celular) {
+            <input type="submit" onclick="location.href='@controllers.routes.HomeController.iniciarRegistro(registro.getRegistro)';" value="Numero Telefonico" />
+        }
+
+        @if(registro.getRegistro == TipoRegistro.Correo) {
+            <input type="submit" onclick="location.href='@controllers.routes.HomeController.iniciarRegistro(registro.getRegistro)';" value="Correo" />
+        }
+
+        @if(registro.getRegistro == TipoRegistro.Facebook) {
+            <input type="submit" onclick="location.href='@controllers.routes.HomeController.iniciarRegistro(registro.getRegistro)';" value="Facebook" />
+        }
+    }
 
 }

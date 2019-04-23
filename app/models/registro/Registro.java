@@ -2,8 +2,12 @@ package models.registro;
 
 public abstract class Registro {
 
-    public TipoRegistro tiopoRegistro;
+    protected TipoRegistro tiopoRegistro;
 
     public abstract void registrar();
+
+    public TipoRegistro getRegistro() {
+        return this.tiopoRegistro;
+    }
 
 }

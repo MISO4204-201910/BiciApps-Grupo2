@@ -4,11 +4,15 @@ package controllers;
 import models.Configuracion;
 import models.prestamo.Prestamo;
 import models.prestamo.TipoPago;
+import models.registro.Registro;
+import models.registro.TipoRegistro;
 import play.i18n.MessagesApi;
 import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Controller;
 import play.mvc.Result;
 import respository.UserRepository;
+import scala.collection.Seq;
+import scala.collection.JavaConverters;
 
 import javax.inject.Inject;
 
@@ -58,11 +62,12 @@ public class HomeController extends Controller {
         }
 
         public Result registro() {
-            return ok(views.html.registro.render());
+            Seq<Registro> collection = JavaConverters.asScalaIteratorConverter(configuracion.registros.iterator()).asScala().toSeq();
+        return ok(views.html.registro.render(collection));
         }
 
-        public Result iniciarRegistro(String tipoRegistro) {
-            return ok(tipoRegistro);
+        public Result iniciarRegistro(TipoRegistro tipoRegistro) {
+            return ok(tipoRegistro.name());
         }
 
         /*public Result registroFacebook() {

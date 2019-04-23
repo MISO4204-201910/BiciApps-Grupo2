@@ -4,6 +4,7 @@ import com.google.inject.AbstractModule;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigValue;
 import models.Configuracion;
+import models.ConfiguracionImpl;
 import models.prestamo.Prestamo;
 import models.prestamo.PrestamoFactory;
 import models.prestamo.TipoPago;
@@ -35,11 +36,11 @@ public class Module extends AbstractModule {
         try {
             Prestamo prestamo = prestamoConfiguracion(prestamoConfig);
             ArrayList<Registro> registros = registroConfiguracion(registroConfig);
-
-            Configuracion configuracion = new Configuracion(prestamo, registros);
+            Configuracion configuracion = new ConfiguracionImpl(prestamo, registros);
 
             bind(Configuracion.class)
-                    .to(configuracion.getClass());
+                    .toInstance(configuracion);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
