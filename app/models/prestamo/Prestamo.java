@@ -1,5 +1,7 @@
 package models.prestamo;
 
+import models.PrestamoDTO;
+
 import java.time.Instant;
 
 public abstract class Prestamo {
@@ -33,5 +35,10 @@ public abstract class Prestamo {
     }
     public Double getValor(){
         return this.valor;
+    }
+
+    public  void fromDto(PrestamoDTO dto) {
+        setIdUsuario(dto.idUsuario);
+        setIdBicicleta(dto.idBicicleta);
     }
 }
