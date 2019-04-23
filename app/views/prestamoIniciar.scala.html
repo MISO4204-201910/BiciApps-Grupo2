@@ -1,16 +1,18 @@
 @(nombreUsuario: String, idUsuario: Long)
+@helper.form(action = controllers.routes.HomeController.realizarPrestamo(idUsuario)) {
+    @helper.CSRF.formField
+    <h1>Prestamo Bicicletas</h1>
 
-<h1>Prestamo Bicicletas</h1>
+    <ul>
+        <li>
+            Usuario: @nombreUsuario
+        </li>
 
-<ul>
-    <li>
-        Usuario: @nombreUsuario
-    </li>
+        <li>
+            <label for="codigo_bicicleta">Codigo Bicicleta:</label>
+            <input type="text" name="codigo_bicicleta" id="codigo_bicicleta">
+        </li>
+    </ul>
 
-    <li>
-        <label for="codigo_bicicleta">Codigo Bicicleta:</label>
-        <input type="text" name="codigo_bicicleta" id="codigo_bicicleta">
-    </li>
-</ul>
-
-<input type="submit" onclick="location.href='@controllers.routes.HomeController.finalizarPrestamo';" value="Finalizar Prestamo" />
+    <input type="submit"  value="Realizar Prestamo" />
+}
