@@ -4,19 +4,28 @@ package controllers;
 import models.Configuracion;
 import models.User;
 import models.prestamo.Prestamo;
+import models.PrestamoDTO;
 import models.prestamo.TipoPago;
 import models.registro.Registro;
 import models.registro.TipoRegistro;
+import play.Logger;
+import play.data.DynamicForm;
+import play.data.FormFactory;
 import play.i18n.MessagesApi;
 import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Controller;
 import play.mvc.Result;
+
 import respository.PuntoRepository;
+import respository.BicicletaRepository;
+import respository.PrestamoRepository;
 import respository.UserRepository;
 import scala.collection.Seq;
 import scala.collection.JavaConverters;
 
 import javax.inject.Inject;
+import java.time.Instant;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 
@@ -29,25 +38,55 @@ public class HomeController extends Controller {
 
     private final UserRepository userRepository;
     private final PuntoRepository puntoRepository;
+    private final PrestamoRepository prestamoRepository;
+    private final BicicletaRepository bicicletaRepository;
     private final Configuracion configuracion;
     private final HttpExecutionContext httpExecutionContext;
     private final MessagesApi messagesApi;
+    private final FormFactory formFactory;
 
     @Inject
     public HomeController(UserRepository userRepository,
                           PuntoRepository puntoRepository,
+                          PrestamoRepository prestamoRepository,
+                          BicicletaRepository bicicletaRepository,
                           Configuracion configuracion,
                           HttpExecutionContext httpExecutionContext,
-                          MessagesApi messagesApi) {
+                          MessagesApi messagesApi,
+                          FormFactory formFactory) {
         this.userRepository = userRepository;
         this.puntoRepository= puntoRepository;
+        this.prestamoRepository = prestamoRepository;
+        this.bicicletaRepository = bicicletaRepository;
         this.configuracion = configuracion;
         this.httpExecutionContext = httpExecutionContext;
         this.messagesApi = messagesApi;
+        this.formFactory = formFactory;
     }
 
         public Result index () {
             return ok(views.html.index.render());
+        }
+
+        public CompletionStage<Result> realizarPrestamo(Long idUsuario) {
+            DynamicForm dynamicForm = formFactory.form().bindFromRequest();
+            String codigoBicicleta = dynamicForm.get("codigo_bicicleta");
+            return bicicletaRepository.lookupByCodigo(codigoBicicleta).thenComposeAsync(optBicicleta -> {
+                if (optBicicleta.isPresent()) {
+                    PrestamoDTO prestamoDTO = new PrestamoDTO();
+                    prestamoDTO.fechaInicio = Instant.now();
+                    prestamoDTO.idBicicleta = 5L;
+                    prestamoDTO.idUsuario = idUsuario;
+                    prestamoDTO.idBicicleta = optBicicleta.get().id;
+                    return prestamoRepository.insert(prestamoDTO).thenApplyAsync(a -> {
+                        configuracion.prestamo.fromDto(prestamoDTO);
+                        return ok(views.html.prestamo.render(configuracion.prestamo));
+                    }, httpExecutionContext.current());
+                } else {
+                    return CompletableFuture.completedFuture(notFound(views.html.notFound.render(idUsuario)));
+                }
+            }, httpExecutionContext.current());
+
         }
 
         public CompletionStage<Result> prestamoIniciar(Long idUsuario) {

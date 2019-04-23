@@ -9,7 +9,8 @@ GET    /registro/inicio             controllers.HomeController.iniciarRegistro(t
 
 ->  /kilometraje kilometraje.Routes
 
-GET /prestamo/iniciar     controllers.HomeController.prestamoIniciar(idUsuario: Long)
+GET /prestamo/iniciar               controllers.HomeController.prestamoIniciar(idUsuario: Long)
+POST /prestamo/registrar            controllers.HomeController.realizarPrestamo(idUsuario: Long)
 GET /prestamo/finalizar             controllers.HomeController.finalizarPrestamo
 GET /gamificationBiciGov            controllers.HomeController.gamificationBiciGov(idUsuario : Long)
 GET /gamificationBiciCity            controllers.HomeController.gamificationBiciCity

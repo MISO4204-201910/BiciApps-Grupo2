@@ -27,7 +27,7 @@ create table user (
   create table prestamo (
   id                        bigint not null,
   id_usuario                bigint not null,
-  id_bicicpleta             bigint not null,
+  id_bicicleta             bigint not null,
   fecha_inicio              timestamp not null DEFAULT NOW(),
   fecha_fin                 timestamp,
   tipo_pago                 varchar(10),
