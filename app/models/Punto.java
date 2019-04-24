@@ -7,10 +7,10 @@ public class Punto extends BaseModel{
 
     private static final long serialVersionUID = 1L;
 
-    public String puntosKilometraje;
+    public Integer puntosKilometraje;
 
-    public String puntosRecorridos;
+    public Integer puntosRecorridos;
 
-    public String puntosRecomendaciones;
+    public Integer puntosRecomendaciones;
 
 }

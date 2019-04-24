@@ -1,4 +1,4 @@
-@()
+@(usuario: String, puntos: Integer)
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
@@ -26,26 +26,17 @@
 
 <body>
     <h2 >Consulta tus puntos</h2>
-    <h3> Hola </h3>
+    <h3> Hola @usuario</h3>
     <div class="card" style="width: 300px;">
-        <img class="card-img-top" src="https://bicycledutch.files.wordpress.com/2016/01/utrecht-main-cycle-routes.jpg?w=768&h=448">
+        <img class="card-img-top" src="http://inrng.com/medias/img/andregreipelrouen.jpg">
             <div class="card-body">
-                <h5 class="card-title">Puntos por recorridos</h5>
-                <p class="card-text">Los puntos ganados por tus recomendaciones son: </p>
-                <p class="card-text" id="puntos">50</p>
+                <h5 class="card-title">Puntos disponibles</h5>
+                <p class="card-text">Los puntos ganados por tus recomendaciones y tus kilometros recorridos son: </p>
+                <p class="card-text" id="puntos">@puntos</p>
             </div>
     </div>
     <br><br>
-    <div class="card" style="width: 300px;">
-        <img class="card-img-top" src="https://images-na.ssl-images-amazon.com/images/I/51OZ%2BhlWm7L._SX425_.jpg">
-            <div class="card-body">
-                <h5 class="card-title">Punto por Kilometraje</h5>
-                <p class="card-text">Los puntos ganados por tus kilometros son: </p>
-                <p class="card-text" id="puntos">100</p>
-            </div>
-    </div>
-
-    <a href="/redimir" class="btn btn-primary">Redimir Punto</a>
+    <a href="/redimir" class="btn btn-primary">Redimir puntos</a>
 
 </body>
 

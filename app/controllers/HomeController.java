@@ -103,10 +103,12 @@ public class HomeController extends Controller {
         public Result finalizarPrestamo() {
             configuracion.prestamo.finalizarViaje();
             if (configuracion.prestamo.tipoPago == TipoPago.Efectivo) {
-                return ok(views.html.prestamoEfectivo.render(configuracion.prestamo));
+                return ok(views.html.prestamoPago.render(configuracion.prestamo));
             } else if (configuracion.prestamo.tipoPago == TipoPago.Gratuito) {
                 return ok(views.html.prestamoGratuito.render(configuracion.prestamo));
-            } else {
+            } else if(configuracion.prestamo.tipoPago == TipoPago.Tarjeta) {
+                return ok(views.html.prestamoPago.render(configuracion.prestamo));
+            }else{
                 return ok("Pago no encontrado");
             }
         }
@@ -132,16 +134,30 @@ public class HomeController extends Controller {
            return ok("Registro correo");
         }*/
 
-        public CompletionStage<Result> gamificationBiciGov(Long idUsuario){
-            return puntoRepository.lookupByUserId(idUsuario).thenApplyAsync( listaPuntos -> {
-                return ok(views.html.gamificationBiciGov.render(idUsuario, listaPuntos));
-            }, httpExecutionContext.current());
-            //return ok(views.html.gamificationBiciGov.render());
+        public Result gamification(){
+            return  ok(views.html.loginBiciGov.render());
         }
-        public Result gamificationBiciCity(){
-            //User usuario = new User("12345678","CC","Alejandro","Martinez",1986-03-10);
-
-            return ok(views.html.gamificationBiciCity.render());
+        public CompletionStage<Result> gamificationBiciGov(Long idUsuario){
+            return userRepository.lookup(idUsuario).thenApplyAsync( optUser -> {
+                if (optUser.isPresent()) {
+                    String nombreCompleto = optUser.get().nombre + " " + optUser.get().apellidos;
+                    Integer puntos = optUser.get().puntos;
+                    return ok(views.html.gamificationBiciGov.render(nombreCompleto, puntos));
+                } else {
+                    return notFound(views.html.notFound.render(idUsuario));
+                }
+            }, httpExecutionContext.current());
+        }
+        public CompletionStage<Result> gamificationBiciCity(Long idUsuario){
+            return userRepository.lookup(idUsuario).thenApplyAsync( optUser -> {
+                if (optUser.isPresent()) {
+                    String nombreCompleto = optUser.get().nombre + " " + optUser.get().apellidos;
+                    Integer puntos = optUser.get().puntos;
+                    return ok(views.html.gamificationBiciCity.render(nombreCompleto, puntos));
+                } else {
+                    return notFound(views.html.notFound.render(idUsuario));
+                }
+            }, httpExecutionContext.current());
         }
         public Result catalogoPremios(){
             return ok(views.html.catalogoPremios.render());

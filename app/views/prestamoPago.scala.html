@@ -23,5 +23,9 @@
     <li>
         Valor a pagar $: @prestamo.getValor  Pesos
     </li>
+    @if(prestamo.getTipoPago.toString == "Tarjeta"){
+        <li>Tus kilometros recorridos son: @prestamo.getKilometraje km</li>
+        <li>Tus puntos acumulados por este trayecto son: @prestamo.getPuntos</li>
+    }
 </ul>
 

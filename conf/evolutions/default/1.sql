@@ -9,6 +9,7 @@ create table user (
   nombre                    varchar(255),
   apellidos                 varchar(255),
   fecha_nacimiento           timestamp,
+  puntos                    bigint,
   constraint pk_users primary key (id));
 
   create table bicicleta (

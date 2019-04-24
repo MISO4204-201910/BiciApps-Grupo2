@@ -33,4 +33,12 @@ public class UserRepository {
         }, executionContext);
     }
 
+    public CompletionStage<Integer> editPuntos(User user, Integer puntos) {
+        return supplyAsync(() -> {
+            user.puntos=puntos;
+            ebeanServer.update(user);
+            return user.puntos;
+        }, executionContext);
+    }
+
 }
