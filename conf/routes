@@ -8,14 +8,16 @@ GET    /registro                    controllers.HomeController.registro
 GET    /registro/inicio             controllers.HomeController.iniciarRegistro(tipoRegistro: TipoRegistro)
 
 ->  /kilometraje kilometraje.Routes
+->  /recomendaciones recomendaciones.Routes
 
 GET /prestamo/iniciar               controllers.HomeController.prestamoIniciar(idUsuario: Long)
 POST /prestamo/registrar            controllers.HomeController.realizarPrestamo(idUsuario: Long)
-GET /prestamo/finalizar             controllers.HomeController.finalizarPrestamo
+GET /prestamo/finalizar             controllers.HomeController.finalizarPrestamo(idUsuario: Long)
 GET /gamificationBiciGov            controllers.HomeController.gamificationBiciGov(idUsuario : Long)
 GET /gamificationBiciCity            controllers.HomeController.gamificationBiciCity(idUsuario : Long)
 GET /redimir                        controllers.HomeController.catalogoPremios
 GET /login                          controllers.HomeController.gamification
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

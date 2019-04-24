@@ -5,7 +5,7 @@ import java.time.Instant;
 
 public class Tarjeta extends Prestamo {
 
-    private Double KM_POR_SEGUNDO = 0.00417;
+    private Double KM_POR_SEGUNDO = 10.00417;
     private Double TARIFA_POR_SEGUNDO= 1.4;
     private Double PUNTOS_POR_KM = 0.333;
 

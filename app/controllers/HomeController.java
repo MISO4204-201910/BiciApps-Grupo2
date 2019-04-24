@@ -2,6 +2,7 @@ package controllers;
 
 
 import models.Configuracion;
+import models.Punto;
 import models.User;
 import models.prestamo.Prestamo;
 import models.PrestamoDTO;
@@ -100,13 +101,27 @@ public class HomeController extends Controller {
             }, httpExecutionContext.current());
         }
 
-        public Result finalizarPrestamo() {
+        public Result finalizarPrestamo(Long idUsuario) {
             configuracion.prestamo.finalizarViaje();
             if (configuracion.prestamo.tipoPago == TipoPago.Efectivo) {
                 return ok(views.html.prestamoPago.render(configuracion.prestamo));
             } else if (configuracion.prestamo.tipoPago == TipoPago.Gratuito) {
+                Punto punto = new Punto();
+                punto.id_usuario=idUsuario;
+                punto.categoria="Prestamo";
+                punto.valor= Long.valueOf(configuracion.prestamo.getPuntos());
+                puntoRepository.insert(punto);
                 return ok(views.html.prestamoGratuito.render(configuracion.prestamo));
             } else if(configuracion.prestamo.tipoPago == TipoPago.Tarjeta) {
+                Punto punto = new Punto();
+                punto.id_usuario=idUsuario;
+                punto.categoria="Prestamo";
+                punto.valor= Long.valueOf(configuracion.prestamo.getPuntos());
+                puntoRepository.insert(punto);
+                puntoRepository.lookupByUserId(idUsuario).thenApplyAsync(listaPuntos ->{
+                   System.out.println(listaPuntos.get(0).valor);
+                   return null;
+                }, httpExecutionContext.current());
                 return ok(views.html.prestamoPago.render(configuracion.prestamo));
             }else{
                 return ok("Pago no encontrado");
