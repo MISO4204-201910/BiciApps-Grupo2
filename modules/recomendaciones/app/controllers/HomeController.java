@@ -1,14 +1,18 @@
 package controllers.recomendaciones;
 
 import com.co.common.models.Punto;
-import play.api.Configuration;
+import com.co.common.models.Configuracion;
+import com.co.common.models.gamification.Gamification;
+import play.data.DynamicForm;
+import play.data.FormFactory;
 import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Controller;
 import play.mvc.Result;
-import repository.PuntoRepository;
-import repository.UserRepository;
+import com.co.common.repository.PuntoRepository;
+import com.co.common.repository.UserRepository;
 
 import javax.inject.Inject;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 
@@ -16,20 +20,24 @@ import java.util.concurrent.CompletionStage;
 
 public class HomeController extends Controller {
 
-    private final Configuration configuracion;
+    private final Configuracion configuracion;
     private final PuntoRepository puntoRepository;
     private final UserRepository userRepository;
     private final HttpExecutionContext httpExecutionContext;
+    private final FormFactory formFactory;
 
 
     @Inject
-    public HomeController(Configuration configuracion,
+    public HomeController(Configuracion configuracion,
                           PuntoRepository puntoRepository,
-                          UserRepository userRepository, HttpExecutionContext httpExecutionContext){
+                          UserRepository userRepository,
+                          HttpExecutionContext httpExecutionContext,
+                          FormFactory formFactory){
         this.configuracion = configuracion;
         this.puntoRepository= puntoRepository;
         this.userRepository = userRepository;
         this.httpExecutionContext = httpExecutionContext;
+        this.formFactory = formFactory;
     }
 
     public Result index(){return ok("index");}
@@ -45,8 +53,10 @@ public class HomeController extends Controller {
 
     }
 
-    public Result activarRecomendacion(Long idUsuario, String codigoUsuario){
-        if(configuracion.gamification.recomendaciones == true){
+    public CompletionStage<Result> activarRecomendacion(Long idUsuario){
+        if(configuracion.categorias.contains(Gamification.Recomendaciones)){
+            DynamicForm dynamicForm = formFactory.form().bindFromRequest();
+            String codigoUsuario = dynamicForm.get("codigo_recomendacion");
             return userRepository.lookupCode(codigoUsuario).thenComposeAsync(optUser ->{
                 if(optUser.isPresent()){
                     Punto puntoOrigen = new Punto();
@@ -59,20 +69,20 @@ public class HomeController extends Controller {
                     puntoDestino.categoria="recomendaciones";
                     puntoDestino.valor=20L;
                     puntoRepository.insert(puntoDestino);
-                    userRepository.lookup(idUsuario).thenApplyAsync(destUser ->{
+                    return userRepository.lookup(idUsuario).thenApplyAsync(destUser ->{
                         if(destUser.isPresent()){
-                            return ok(views.html.activada.render(optUser,destUser,puntoDestino));
+
+                            return ok(views.html.activada.render(optUser.get(),destUser.get(),puntoDestino));
                         }else{
                             return notFound(views.html.notFound.render(destUser.get().id));
                         }
                     },httpExecutionContext.current());
-
                 }else{
-                    return notFound(views.html.notFound.render(idUsuario));
+                    return CompletableFuture.completedFuture(notFound(views.html.notFound.render(idUsuario)));
                 }
             }, httpExecutionContext.current());
         }else {
-            return ok("Modulo no disponible");
+            return CompletableFuture.completedFuture(ok("Modulo no disponible"));
         }
     }
 }

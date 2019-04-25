@@ -17,7 +17,7 @@ POST /prestamo/registrar            controllers.HomeController.realizarPrestamo(
 GET /prestamo/finalizar             controllers.HomeController.finalizarPrestamo(idUsuario: Long)
 GET /redimir                        controllers.HomeController.catalogoPremios
 GET /login                          controllers.HomeController.gamification
-
+GET /recomendar                     controllers.HomeController.recomendar(idUsuario: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

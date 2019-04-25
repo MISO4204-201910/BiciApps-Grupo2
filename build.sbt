@@ -25,3 +25,5 @@ scalaVersion := "2.12.8"
 libraryDependencies ++= Seq(guice, javaForms, jdbc, "com.h2database" % "h2" % "1.4.197")
 
 routesImport ++= Seq("com.co.common.models.registro._", "controllers.Binders._")
+
+playEbeanModels in Compile := Seq("com.co.common.models.*")

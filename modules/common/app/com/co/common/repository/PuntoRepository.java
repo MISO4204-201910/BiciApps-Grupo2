@@ -1,15 +1,16 @@
 package com.co.common.repository;
 
-import io.ebean.*;
 import com.co.common.models.Punto;
+import io.ebean.Ebean;
+import io.ebean.EbeanServer;
 import play.db.ebean.EbeanConfig;
+import play.libs.concurrent.HttpExecutionContext;
 
 import javax.inject.Inject;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
 
 import static java.util.concurrent.CompletableFuture.supplyAsync;
-import play.libs.concurrent.HttpExecutionContext;
 
 
 public class PuntoRepository {
@@ -26,7 +27,7 @@ public class PuntoRepository {
     public CompletionStage<List<Punto>> lookupByUserId(Long idUsuario, String categoria) {
         return supplyAsync(() -> ebeanServer.find(Punto.class)
                 .where().eq("id_usuario", idUsuario)
-                .and().eq("gamification", categoria)
+                .and().eq("categoria", categoria)
                 .findList(), executionContext.current());
     }
 

@@ -1,4 +1,5 @@
 GET /index                  controllers.recomendaciones.HomeController.index()
 GET /puntosRecomendaciones  controllers.recomendaciones.HomeController.mostrarPuntos(idUsuario : Long)
+POST /activar               controllers.recomendaciones.HomeController.activarRecomendacion(idUsuario: Long)
 
 GET /assets/*file           controllers.Assets.at(path="/public/lib/myadmin", file)

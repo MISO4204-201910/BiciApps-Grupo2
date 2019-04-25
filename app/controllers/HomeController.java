@@ -102,11 +102,14 @@ public class HomeController extends Controller {
             configuracion.prestamo.finalizarViaje();
 
             for(Gamification categoria : configuracion.categorias) {
-                Punto punto = new Punto();
-                punto.id_usuario = idUsuario;
-                punto.categoria = categoria.name();
-                punto.valor = Long.valueOf(configuracion.prestamo.getPuntos());
-                puntoRepository.insert(punto);
+                if(categoria!=Gamification.Recomendaciones) {
+                    Punto punto = new Punto();
+                    punto.id_usuario = idUsuario;
+                    punto.categoria = categoria.name();
+                    System.out.println("categoria de punto: " + punto.categoria);
+                    punto.valor = Long.valueOf(configuracion.prestamo.getPuntos());
+                    puntoRepository.insert(punto);
+                }
             }
             return FinalizarPrestamoViewFactory.crear(configuracion.prestamo, configuracion.categorias);
         }
@@ -126,5 +129,9 @@ public class HomeController extends Controller {
 
         public Result catalogoPremios(){
             return ok(views.html.catalogoPremios.render());
+        }
+
+        public Result recomendar(Long idUsuario){
+            return ok(views.html.pasaCodigo.render(idUsuario));
         }
     }
