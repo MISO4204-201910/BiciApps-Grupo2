@@ -1,15 +1,13 @@
 package controllers.kilometraje;
 
-import models.Punto;
+import com.co.common.models.Punto;
+import com.co.common.repository.PuntoRepository;
 import play.api.Configuration;
 import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Controller;
 import play.mvc.Result;
 import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
-import repository.PuntoRepository;
-
-
 
 
 public class HomeController extends Controller {
@@ -32,7 +30,7 @@ public class HomeController extends Controller {
 
     public CompletionStage<Result> mostrarPuntos(Long idUsuario){
         return puntoRepository.lookupByUserId(idUsuario,"kilometraje").thenApplyAsync(listaPuntos ->{
-            Long puntosUsuario=0L;
+            Long puntosUsuario = 0L;
             for (Punto punto : listaPuntos) {
                 puntosUsuario+=punto.valor;
             }

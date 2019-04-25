@@ -1,7 +1,7 @@
 package views;
 
-import models.gamification.Gamification;
-import models.prestamo.Prestamo;
+import com.co.common.models.gamification.Gamification;
+import com.co.common.models.prestamo.Prestamo;
 import play.mvc.Result;
 
 import java.util.ArrayList;

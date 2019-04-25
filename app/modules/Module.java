@@ -3,15 +3,15 @@ package modules;
 import com.google.inject.AbstractModule;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigValue;
-import models.Configuracion;
-import models.ConfiguracionImpl;
-import models.gamification.Gamification;
-import models.prestamo.Prestamo;
-import models.prestamo.PrestamoFactory;
-import models.prestamo.TipoPago;
-import models.registro.Registro;
-import models.registro.RegistroFactory;
-import models.registro.TipoRegistro;
+import com.co.common.models.Configuracion;
+import com.co.common.models.ConfiguracionImpl;
+import com.co.common.models.gamification.Gamification;
+import com.co.common.models.prestamo.Prestamo;
+import com.co.common.models.prestamo.PrestamoFactory;
+import com.co.common.models.prestamo.TipoPago;
+import com.co.common.models.registro.Registro;
+import com.co.common.models.registro.RegistroFactory;
+import com.co.common.models.registro.TipoRegistro;
 import play.Environment;
 
 import java.util.ArrayList;
@@ -63,6 +63,7 @@ public class Module extends AbstractModule {
 
         return categorias;
     }
+
 
     private ArrayList<Registro> registroConfiguracion(Config config) throws Exception {
         ArrayList<Registro> registros = new ArrayList<>();
