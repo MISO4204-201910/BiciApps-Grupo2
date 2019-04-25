@@ -24,7 +24,7 @@ public class PuntoRepository {
     }
 
     public CompletionStage<List<Punto>> lookupByUserId(Long idUsuario, String categoria) {
-        return supplyAsync(() -> ebeanServer.find(Punto.class).where().eq("id_usuario",idUsuario).and().eq("categoria",categoria).findList(), executionContext.current());
+        return supplyAsync(() -> ebeanServer.find(Punto.class).where().eq("id_usuario",idUsuario).and().eq("gamification",categoria).findList(), executionContext.current());
     }
 
     public CompletionStage<Long> insert(Punto punto) {

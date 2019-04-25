@@ -3,13 +3,10 @@ package controllers;
 
 import models.Configuracion;
 import models.Punto;
-import models.User;
-import models.prestamo.Prestamo;
+import models.gamification.Gamification;
 import models.PrestamoDTO;
-import models.prestamo.TipoPago;
 import models.registro.Registro;
 import models.registro.TipoRegistro;
-import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.i18n.MessagesApi;
@@ -23,6 +20,7 @@ import respository.PrestamoRepository;
 import respository.UserRepository;
 import scala.collection.Seq;
 import scala.collection.JavaConverters;
+import views.FinalizarPrestamoViewFactory;
 
 import javax.inject.Inject;
 import java.time.Instant;
@@ -76,7 +74,6 @@ public class HomeController extends Controller {
                 if (optBicicleta.isPresent()) {
                     PrestamoDTO prestamoDTO = new PrestamoDTO();
                     prestamoDTO.fechaInicio = Instant.now();
-                    prestamoDTO.idBicicleta = 5L;
                     prestamoDTO.idUsuario = idUsuario;
                     prestamoDTO.idBicicleta = optBicicleta.get().id;
                     return prestamoRepository.insert(prestamoDTO).thenApplyAsync(a -> {
@@ -103,29 +100,15 @@ public class HomeController extends Controller {
 
         public Result finalizarPrestamo(Long idUsuario) {
             configuracion.prestamo.finalizarViaje();
-            if (configuracion.prestamo.tipoPago == TipoPago.Efectivo) {
-                return ok(views.html.prestamoPago.render(configuracion.prestamo));
-            } else if (configuracion.prestamo.tipoPago == TipoPago.Gratuito) {
+
+            for(Gamification categoria : configuracion.categorias) {
                 Punto punto = new Punto();
-                punto.id_usuario=idUsuario;
-                punto.categoria="recorridos";
-                punto.valor= Long.valueOf(configuracion.prestamo.getPuntos());
+                punto.id_usuario = idUsuario;
+                punto.categoria = categoria.name();
+                punto.valor = Long.valueOf(configuracion.prestamo.getPuntos());
                 puntoRepository.insert(punto);
-                return ok(views.html.prestamoGratuito.render(configuracion.prestamo));
-            } else if(configuracion.prestamo.tipoPago == TipoPago.Tarjeta) {
-                Punto punto = new Punto();
-                punto.id_usuario=idUsuario;
-                punto.categoria="kilometraje";
-                punto.valor= Long.valueOf(configuracion.prestamo.getPuntos());
-                puntoRepository.insert(punto);
-                puntoRepository.lookupByUserId(idUsuario).thenApplyAsync(listaPuntos ->{
-                   System.out.println(listaPuntos.get(0).valor);
-                   return null;
-                }, httpExecutionContext.current());
-                return ok(views.html.prestamoPago.render(configuracion.prestamo));
-            }else{
-                return ok("Pago no encontrado");
             }
+            return FinalizarPrestamoViewFactory.crear(configuracion.prestamo, configuracion.categorias);
         }
 
         public Result registro() {
@@ -136,18 +119,6 @@ public class HomeController extends Controller {
         public Result iniciarRegistro(TipoRegistro tipoRegistro) {
             return ok(tipoRegistro.name());
         }
-
-        /*public Result registroFacebook() {
-            return ok("Registro facebook");
-        }
-
-        public Result registroTelefono() {
-            return ok("Registro telefono");
-        }
-
-        public Result registroCorreo() {
-           return ok("Registro correo");
-        }*/
 
         public Result gamification(){
             return  ok(views.html.loginBiciGov.render());
