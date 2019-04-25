@@ -33,7 +33,7 @@ public class Module extends AbstractModule {
 
         final Config prestamoConfig = config.getConfig("prestamo");
         final Config registroConfig = config.getConfig("registro");
-        final Config gamificationConfig = config.getConfig("registro");
+        final Config gamificationConfig = config.getConfig("gamification");
 
 
         try {

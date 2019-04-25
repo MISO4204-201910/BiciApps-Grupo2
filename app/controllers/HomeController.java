@@ -104,7 +104,7 @@ public class HomeController extends Controller {
             for(Gamification categoria : configuracion.categorias) {
                 Punto punto = new Punto();
                 punto.id_usuario = idUsuario;
-                punto.categoria= categoria.name();
+                punto.categoria = categoria.name();
                 punto.valor = Long.valueOf(configuracion.prestamo.getPuntos());
                 puntoRepository.insert(punto);
             }

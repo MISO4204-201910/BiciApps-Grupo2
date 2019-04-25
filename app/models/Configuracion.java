@@ -12,5 +12,4 @@ public abstract class Configuracion {
     public ArrayList<Registro> registros;
     public ArrayList<Gamification> categorias;
 
-
 }
