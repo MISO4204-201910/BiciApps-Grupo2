@@ -1,11 +1,9 @@
-package models;
-
-import com.co.common.models.BaseModel;
+package com.co.common.models;
 
 import javax.persistence.Entity;
 
 @Entity
-public class Punto extends BaseModel {
+public class Punto extends BaseModel{
 
     private static final long serialVersionUID = 1L;
 

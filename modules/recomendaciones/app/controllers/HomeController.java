@@ -1,6 +1,6 @@
 package controllers.recomendaciones;
 
-import models.Punto;
+import com.co.common.models.Punto;
 import play.api.Configuration;
 import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Controller;

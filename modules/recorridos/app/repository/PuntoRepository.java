@@ -2,7 +2,7 @@ package repository;
 
 
 import io.ebean.*;
-import models.Punto;
+import com.co.common.models.Punto;
 import play.db.ebean.EbeanConfig;
 import play.libs.concurrent.HttpExecutionContext;
 

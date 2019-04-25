@@ -1,12 +1,12 @@
 package controllers;
 
 
-import models.Configuracion;
-import models.Punto;
-import models.gamification.Gamification;
-import models.PrestamoDTO;
-import models.registro.Registro;
-import models.registro.TipoRegistro;
+import com.co.common.models.Configuracion;
+import com.co.common.models.Punto;
+import com.co.common.models.gamification.Gamification;
+import com.co.common.models.PrestamoDTO;
+import com.co.common.models.registro.Registro;
+import com.co.common.models.registro.TipoRegistro;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.i18n.MessagesApi;
@@ -14,10 +14,10 @@ import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-import respository.PuntoRepository;
-import respository.BicicletaRepository;
-import respository.PrestamoRepository;
-import respository.UserRepository;
+import com.co.common.repository.PuntoRepository;
+import com.co.common.repository.BicicletaRepository;
+import com.co.common.repository.PrestamoRepository;
+import com.co.common.repository.UserRepository;
 import scala.collection.Seq;
 import scala.collection.JavaConverters;
 import views.FinalizarPrestamoViewFactory;
