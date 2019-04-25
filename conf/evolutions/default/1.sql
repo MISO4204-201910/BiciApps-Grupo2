@@ -10,6 +10,7 @@ create table user (
   apellidos                  varchar(255),
   fecha_nacimiento           timestamp,
   puntos                     bigint,
+  codigo                     varchar (255),
   constraint pk_users primary key (id));
 
 

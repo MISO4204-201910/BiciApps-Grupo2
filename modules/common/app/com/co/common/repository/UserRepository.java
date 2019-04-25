@@ -25,19 +25,15 @@ public class UserRepository {
         return supplyAsync(() -> Optional.ofNullable(ebeanServer.find(User.class).setId(id).findOne()), executionContext);
     }
 
+    public CompletionStage<Optional<User>> lookupCode(String code) {
+        return supplyAsync(() -> Optional.ofNullable(ebeanServer.find(User.class).where().eq("codigo",code).findOne()), executionContext);
+    }
+
     public CompletionStage<Long> insert(User user) {
         return supplyAsync(() -> {
             user.id = System.currentTimeMillis(); // not ideal, but it works
             ebeanServer.insert(user);
             return user.id;
-        }, executionContext);
-    }
-
-    public CompletionStage<Integer> editPuntos(User user, Integer puntos) {
-        return supplyAsync(() -> {
-            user.puntos=puntos;
-            ebeanServer.update(user);
-            return user.puntos;
         }, executionContext);
     }
 

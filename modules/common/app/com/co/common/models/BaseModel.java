@@ -1,5 +1,6 @@
 package com.co.common.models;
 
+
 import io.ebean.Model;
 
 import javax.persistence.Id;

@@ -29,4 +29,7 @@ public class User extends BaseModel{
 
     public Integer puntos;
 
+    @Constraints.Required
+    public String codigo;
+
 }

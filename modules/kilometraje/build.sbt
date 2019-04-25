@@ -7,3 +7,5 @@ libraryDependencies ++= Seq(
 )
 
 PlayKeys.devSettings += ("play.http.router", "kilometraje.Routes")
+
+playEbeanModels in Compile := Seq("com.co.common.models.*")

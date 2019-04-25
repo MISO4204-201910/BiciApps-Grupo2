@@ -102,11 +102,14 @@ public class HomeController extends Controller {
             configuracion.prestamo.finalizarViaje();
 
             for(Gamification categoria : configuracion.categorias) {
-                Punto punto = new Punto();
-                punto.id_usuario = idUsuario;
-                punto.categoria = categoria.name();
-                punto.valor = Long.valueOf(configuracion.prestamo.getPuntos());
-                puntoRepository.insert(punto);
+                if(categoria!=Gamification.Recomendaciones) {
+                    Punto punto = new Punto();
+                    punto.id_usuario = idUsuario;
+                    punto.categoria = categoria.name();
+                    System.out.println("categoria de punto: " + punto.categoria);
+                    punto.valor = Long.valueOf(configuracion.prestamo.getPuntos());
+                    puntoRepository.insert(punto);
+                }
             }
             return FinalizarPrestamoViewFactory.crear(configuracion.prestamo, configuracion.categorias);
         }
@@ -123,29 +126,12 @@ public class HomeController extends Controller {
         public Result gamification(){
             return  ok(views.html.loginBiciGov.render());
         }
-        public CompletionStage<Result> gamificationBiciGov(Long idUsuario){
-            return userRepository.lookup(idUsuario).thenApplyAsync( optUser -> {
-                if (optUser.isPresent()) {
-                    String nombreCompleto = optUser.get().nombre + " " + optUser.get().apellidos;
-                    Integer puntos = optUser.get().puntos;
-                    return ok(views.html.gamificationBiciGov.render(nombreCompleto, puntos));
-                } else {
-                    return notFound(views.html.notFound.render(idUsuario));
-                }
-            }, httpExecutionContext.current());
-        }
-        public CompletionStage<Result> gamificationBiciCity(Long idUsuario){
-            return userRepository.lookup(idUsuario).thenApplyAsync( optUser -> {
-                if (optUser.isPresent()) {
-                    String nombreCompleto = optUser.get().nombre + " " + optUser.get().apellidos;
-                    Integer puntos = optUser.get().puntos;
-                    return ok(views.html.gamificationBiciCity.render(nombreCompleto, puntos));
-                } else {
-                    return notFound(views.html.notFound.render(idUsuario));
-                }
-            }, httpExecutionContext.current());
-        }
+
         public Result catalogoPremios(){
             return ok(views.html.catalogoPremios.render());
+        }
+
+        public Result recomendar(Long idUsuario){
+            return ok(views.html.pasaCodigo.render(idUsuario));
         }
     }
