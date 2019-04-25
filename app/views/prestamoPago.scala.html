@@ -1,5 +1,7 @@
 @import models.prestamo.Prestamo
-@(prestamo: Prestamo)
+@import models.gamification.Gamification
+@import java.util
+@(prestamo: Prestamo, categorias: util.ArrayList[Gamification])
 <html>
 
 <body>
@@ -24,12 +26,15 @@
         <li>
             Valor a pagar $: @prestamo.getValor  Pesos
         </li>
-        @if(prestamo.getTipoPago.toString == "Tarjeta"){
-            <li>Tus kilometros recorridos son: @prestamo.getKilometraje km</li>
-            <li>Tus puntos acumulados por este trayecto son: @prestamo.getPuntos</li>
-            <br><br>
-            <h2>Consulta los puntos ganados por los Km recorridos</h2>
-            <a href="../kilometraje/puntosKm?idUsuario=@prestamo.getIdUsuario">Consultar puntos</a>
+
+        @for(categoria <- categorias) {
+            @if(categoria == Gamification.Kilometraje){
+                <li>Tus kilometros recorridos son: @prestamo.getKilometraje km</li>
+                <li>Tus puntos acumulados por este trayecto son: @prestamo.getPuntos</li>
+                <br><br>
+                <h2>Consulta los puntos ganados por los Km recorridos</h2>
+                <a href="../kilometraje/puntosKm?idUsuario=@prestamo.getIdUsuario">Consultar puntos</a>
+            }
         }
 
 </body>

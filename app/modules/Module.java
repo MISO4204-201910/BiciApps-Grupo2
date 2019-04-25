@@ -5,6 +5,7 @@ import com.typesafe.config.Config;
 import com.typesafe.config.ConfigValue;
 import models.Configuracion;
 import models.ConfiguracionImpl;
+import models.gamification.Gamification;
 import models.prestamo.Prestamo;
 import models.prestamo.PrestamoFactory;
 import models.prestamo.TipoPago;
@@ -32,11 +33,14 @@ public class Module extends AbstractModule {
 
         final Config prestamoConfig = config.getConfig("prestamo");
         final Config registroConfig = config.getConfig("registro");
+        final Config gamificationConfig = config.getConfig("registro");
+
 
         try {
             Prestamo prestamo = prestamoConfiguracion(prestamoConfig);
             ArrayList<Registro> registros = registroConfiguracion(registroConfig);
-            Configuracion configuracion = new ConfiguracionImpl(prestamo, registros);
+            ArrayList<Gamification> categorias = gamificationConfiguracion(gamificationConfig);
+            Configuracion configuracion = new ConfiguracionImpl(prestamo, registros, categorias);
 
             bind(Configuracion.class)
                     .toInstance(configuracion);
@@ -44,6 +48,20 @@ public class Module extends AbstractModule {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private ArrayList<Gamification> gamificationConfiguracion(Config config) throws Exception {
+        ArrayList<Gamification> categorias = new ArrayList<>();
+
+        for (Map.Entry<String, ConfigValue> conf : config.entrySet()) {
+
+            if ((Boolean) conf.getValue().unwrapped()){
+                Gamification categoria = Gamification.valueOf(conf.getKey());
+                categorias.add(categoria);
+            }
+        }
+
+        return categorias;
     }
 
     private ArrayList<Registro> registroConfiguracion(Config config) throws Exception {
