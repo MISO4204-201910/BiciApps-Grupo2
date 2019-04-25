@@ -18,36 +18,45 @@ def seleccionar(request):
             os.chdir("/Maestria Uniandes/2do Semestre/Fabricas/BiciApps-Grupo2/conf")
             f = open("configuraciones.conf", "w+")
             if(nombre=="BiciGov"):
-                registro=" registro{ \n celular = false,\n facebook= true, \n correo = true\n},\n"
+                registro=" registro{ \n Celular = false\n Facebook= true \n Correo = true\n}\n"
                 f.write(registro)
-                prestamo=" prestamo{ \n Gratuito = true,\n Efectivo = false, \n Tarjeta = false\n},\n"
+                prestamo=" prestamo{ \n Gratuito = true\n Efectivo = false \n Tarjeta = false\n}\n"
                 f.write(prestamo)
-                gamification=" gamification{\n kilometraje =false,\n recorrido = true,\n recomendaciones=false\n}"
+                gamification=" gamification{\n Kilometraje =false\n Recorrido = true\n Recomendaciones=false\n}"
                 f.write(gamification)
                 f.close()
-                wd = os.getcwd()
+                ##wd = os.getcwd()
                 os.chdir("/Maestria Uniandes/2do Semestre/Fabricas/BiciApps-Grupo2")
                 result = subprocess.run("sbt run &", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                print(str(result))
                 os.chdir(wd)
                 return HttpResponse("Archivo BiciCity Creado")
 
             elif(nombre=="BiciClub"):
-                registro = " registro{ \n celular = true,\n facebook= false, \n correo = true\n},\n"
+                registro = " registro{ \n Celular = true\n Facebook= false \n Correo = true\n}\n"
                 f.write(registro)
-                prestamo =  " prestamo{ \n Gratuito = false,\n Efectivo = true, \n Tarjeta = false\n},\n"
+                prestamo =  " prestamo{ \n Gratuito = false\n Efectivo = true \n Tarjeta = false\n}\n"
                 f.write(prestamo)
-                gamification =" gamification{\n kilometraje =false,\n recorrido = false,\n recomendaciones=false\n}"
+                gamification =" gamification{\n Kilometraje = false\n Recorrido = false\n Recomendaciones=false\n}"
                 f.write(gamification)
                 f.close()
+                os.chdir("/Maestria Uniandes/2do Semestre/Fabricas/BiciApps-Grupo2")
+                result = subprocess.run("sbt run &", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                print(str(result))
+                os.chdir(wd)
                 return HttpResponse("Archivo BiciClub Creado")
             else:
-                registro = " registro{ \n celular = true,\n facebook= true, \n correo = false\n},\n"
+                registro = " registro{ \n Celular = true\n Facebook= true \n Correo = false\n}\n"
                 f.write(registro)
-                prestamo = " prestamo{ \n Gratuito = false,\n Efectivo = false, \n Tarjeta = true\n},\n"
+                prestamo = " prestamo{ \n Gratuito = false\n Efectivo = false \n Tarjeta = true\n}\n"
                 f.write(prestamo)
-                gamification =" gamification{\n kilometraje =true,\n recorrido = false,\n recomendaciones=true\n}"
+                gamification =" gamification{\n Kilometraje = true\n Recorrido = false\n Recomendaciones=true\n}"
                 f.write(gamification)
                 f.close()
+                os.chdir("/Maestria Uniandes/2do Semestre/Fabricas/BiciApps-Grupo2")
+                result = subprocess.run("sbt run &", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                print(str(result))
+                os.chdir(wd)
                 return HttpResponse("Archivo BiciCity Creado")
 
             return HttpResponse("Error al crear la configuracion, intente de nuevo")
