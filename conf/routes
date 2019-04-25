@@ -15,8 +15,6 @@ GET    /registro/inicio             controllers.HomeController.iniciarRegistro(t
 GET /prestamo/iniciar               controllers.HomeController.prestamoIniciar(idUsuario: Long)
 POST /prestamo/registrar            controllers.HomeController.realizarPrestamo(idUsuario: Long)
 GET /prestamo/finalizar             controllers.HomeController.finalizarPrestamo(idUsuario: Long)
-GET /gamificationBiciGov            controllers.HomeController.gamificationBiciGov(idUsuario : Long)
-GET /gamificationBiciCity            controllers.HomeController.gamificationBiciCity(idUsuario : Long)
 GET /redimir                        controllers.HomeController.catalogoPremios
 GET /login                          controllers.HomeController.gamification
 

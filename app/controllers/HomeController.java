@@ -152,28 +152,7 @@ public class HomeController extends Controller {
         public Result gamification(){
             return  ok(views.html.loginBiciGov.render());
         }
-        public CompletionStage<Result> gamificationBiciGov(Long idUsuario){
-            return userRepository.lookup(idUsuario).thenApplyAsync( optUser -> {
-                if (optUser.isPresent()) {
-                    String nombreCompleto = optUser.get().nombre + " " + optUser.get().apellidos;
-                    Integer puntos = optUser.get().puntos;
-                    return ok(views.html.gamificationBiciGov.render(nombreCompleto, puntos));
-                } else {
-                    return notFound(views.html.notFound.render(idUsuario));
-                }
-            }, httpExecutionContext.current());
-        }
-        public CompletionStage<Result> gamificationBiciCity(Long idUsuario){
-            return userRepository.lookup(idUsuario).thenApplyAsync( optUser -> {
-                if (optUser.isPresent()) {
-                    String nombreCompleto = optUser.get().nombre + " " + optUser.get().apellidos;
-                    Integer puntos = optUser.get().puntos;
-                    return ok(views.html.gamificationBiciCity.render(nombreCompleto, puntos));
-                } else {
-                    return notFound(views.html.notFound.render(idUsuario));
-                }
-            }, httpExecutionContext.current());
-        }
+
         public Result catalogoPremios(){
             return ok(views.html.catalogoPremios.render());
         }
