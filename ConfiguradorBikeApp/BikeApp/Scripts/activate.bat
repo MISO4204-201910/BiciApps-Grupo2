@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set "VIRTUAL_ENV=D:\Maestria Uniandes\2do Semestre\Fabricas\BiciApps-Grupo2\ConfiguradorBikeApp\proyConfig"
+set "VIRTUAL_ENV=D:\Maestria Uniandes\2do Semestre\Fabricas\BiciApps-Grupo2\ConfiguradorBikeApp\BikeApp"
 
 if not defined PROMPT (
     set "PROMPT=$P$G"
@@ -23,7 +23,7 @@ if defined _OLD_VIRTUAL_PYTHONHOME (
 )
 
 set "_OLD_VIRTUAL_PROMPT=%PROMPT%"
-set "PROMPT=(proyConfig) %PROMPT%"
+set "PROMPT=(BikeApp) %PROMPT%"
 
 if defined PYTHONHOME (
     set "_OLD_VIRTUAL_PYTHONHOME=%PYTHONHOME%"

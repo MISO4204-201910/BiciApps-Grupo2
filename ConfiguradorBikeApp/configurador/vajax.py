@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
 from .models import *
+import os
 import subprocess
 from subprocess import *
 from django.contrib.auth import authenticate,logout
@@ -13,7 +14,9 @@ def seleccionar(request):
     if(request.method=="POST"):
         nombre=request.POST.get('nombre')
         try:
-            f = open("configuradorBikeApp.conf", "w+")
+            wd = os.getcwd()
+            os.chdir("/Maestria Uniandes/2do Semestre/Fabricas/BiciApps-Grupo2/conf")
+            f = open("configuraciones.conf", "w+")
             if(nombre=="BiciGov"):
                 registro=" registro{ \n celular = false,\n facebook= true, \n correo = true\n},\n"
                 f.write(registro)
@@ -22,11 +25,12 @@ def seleccionar(request):
                 gamification=" gamification{\n kilometraje =false,\n recorrido = true,\n recomendaciones=false\n}"
                 f.write(gamification)
                 f.close()
-                sh = open("pruebash.txt", "w+")
-                #process=subprocess.call('../prueba.sh' ,)
-                process=Popen('prueba.sh', stdout=PIPE, stderr=STDOUT)
-                process.wait()  # Wait for process to complete.
-                return HttpResponse("Archivo BiciGov Creado")
+                wd = os.getcwd()
+                os.chdir("/Maestria Uniandes/2do Semestre/Fabricas/BiciApps-Grupo2")
+                result = subprocess.run("sbt run &", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                os.chdir(wd)
+                return HttpResponse("Archivo BiciCity Creado")
+
             elif(nombre=="BiciClub"):
                 registro = " registro{ \n celular = true,\n facebook= false, \n correo = true\n},\n"
                 f.write(registro)
@@ -47,8 +51,7 @@ def seleccionar(request):
                 return HttpResponse("Archivo BiciCity Creado")
 
             return HttpResponse("Error al crear la configuracion, intente de nuevo")
-
-        except:
-            return HttpResponse("Error al crear la configuracion")
+        except Exception as e:
+            return HttpResponse(e)
 
     return HttpResponse("Metodo no valido")
