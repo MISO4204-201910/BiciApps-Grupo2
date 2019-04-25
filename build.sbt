@@ -3,13 +3,16 @@ name := """BiciApps"""
 version := "1.0-SNAPSHOT"
 
 lazy val kilometraje = (project in file("modules/kilometraje"))
-  .enablePlugins(PlayScala)
+  .enablePlugins(PlayJava, PlayEbean)
 
 lazy val recomendaciones = (project in file("modules/recomendaciones"))
-  .enablePlugins(PlayScala)
+  .enablePlugins(PlayJava, PlayEbean)
+
+lazy val recorridos = (project in file("modules/recorridos"))
+  .enablePlugins(PlayJava, PlayEbean)
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
-  .dependsOn(kilometraje,recomendaciones).aggregate(kilometraje,recomendaciones)
+  .dependsOn(kilometraje,recomendaciones,recorridos).aggregate(kilometraje,recomendaciones,recorridos)
 
 scalaVersion := "2.12.8"
 

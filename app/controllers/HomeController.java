@@ -108,14 +108,14 @@ public class HomeController extends Controller {
             } else if (configuracion.prestamo.tipoPago == TipoPago.Gratuito) {
                 Punto punto = new Punto();
                 punto.id_usuario=idUsuario;
-                punto.categoria="Prestamo";
+                punto.categoria="recorridos";
                 punto.valor= Long.valueOf(configuracion.prestamo.getPuntos());
                 puntoRepository.insert(punto);
                 return ok(views.html.prestamoGratuito.render(configuracion.prestamo));
             } else if(configuracion.prestamo.tipoPago == TipoPago.Tarjeta) {
                 Punto punto = new Punto();
                 punto.id_usuario=idUsuario;
-                punto.categoria="Prestamo";
+                punto.categoria="kilometraje";
                 punto.valor= Long.valueOf(configuracion.prestamo.getPuntos());
                 puntoRepository.insert(punto);
                 puntoRepository.lookupByUserId(idUsuario).thenApplyAsync(listaPuntos ->{

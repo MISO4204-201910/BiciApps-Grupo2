@@ -7,8 +7,10 @@ GET     /                           controllers.HomeController.index
 GET    /registro                    controllers.HomeController.registro
 GET    /registro/inicio             controllers.HomeController.iniciarRegistro(tipoRegistro: TipoRegistro)
 
-->  /kilometraje kilometraje.Routes
-->  /recomendaciones recomendaciones.Routes
+->  /kilometraje                    kilometraje.Routes
+->  /recomendaciones                recomendaciones.Routes
+->  /recorridos                     recorridos.Routes
+
 
 GET /prestamo/iniciar               controllers.HomeController.prestamoIniciar(idUsuario: Long)
 POST /prestamo/registrar            controllers.HomeController.realizarPrestamo(idUsuario: Long)

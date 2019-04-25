@@ -1,0 +1,24 @@
+@(idUsuario: Long,puntos: Long)
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+    <head>
+
+    </head>
+
+    <body>
+        <h2 >Consulta tus puntos</h2>
+        <h3> Hola @idUsuario</h3>
+        <div class="card" style="width: 300px;">
+            <img class="card-img-top" src="http://inrng.com/medias/img/andregreipelrouen.jpg">
+            <div class="card-body">
+                <h5 class="card-title">Puntos disponibles</h5>
+                <p class="card-text">Los puntos ganados por tus recomendaciones son: </p>
+                <p class="card-text" id="puntos">@puntos</p>
+            </div>
+        </div>
+        <br><br>
+        <a href="../redimir" class="btn btn-primary">Redimir puntos</a>
+
+    </body>
+
+</html>

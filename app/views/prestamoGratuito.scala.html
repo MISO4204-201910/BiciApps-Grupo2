@@ -1,8 +1,17 @@
 @import models.prestamo.Prestamo
 @(prestamo: Prestamo)
-
-<h1>Prestamo Finalizado</h1>
-
-<p>
+<html>
+<head>
+    <title>Prestamo gratuito finalizado</title>
+</head>
+<body>
+    <h1>Prestamo Finalizado</h1>
+    <p>
     Muchas gracias por utilizar nuestro servicios usuario @prestamo.getIdUsuario
-</p>
+    </p>
+    <p>Los puntos ganados por este recorrido son: @prestamo.getPuntos</p>
+    <h4>Consulta tus puntos disponibles</h4>
+    <a href="../recorridos/puntosRecorridos?idUsuario=@prestamo.getIdUsuario">Consulta tus puntos</a>
+</body>
+</html>
+

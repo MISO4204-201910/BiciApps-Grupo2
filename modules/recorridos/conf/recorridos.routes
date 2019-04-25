@@ -1,0 +1,4 @@
+GET /index                  controllers.recorridos.HomeController.index()
+GET /puntosRecorridos  controllers.recorridos.HomeController.mostrarPuntos(idUsuario : Long)
+
+GET /assets/*file           controllers.Assets.at(path="/public/lib/myadmin", file)

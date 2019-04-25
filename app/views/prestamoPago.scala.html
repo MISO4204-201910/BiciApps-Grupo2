@@ -1,31 +1,36 @@
 @import models.prestamo.Prestamo
 @(prestamo: Prestamo)
+<html>
 
+<body>
 <h1>Prestamo Finalizado</h1>
 
-<ul>
-    <li>
-        Id Usuario: @prestamo.getIdUsuario
-    </li>
+        <li>
+            Id Usuario: @prestamo.getIdUsuario
+        </li>
 
-    <li>
-        Id Bicicleta: @prestamo.getIdBicicleta
-    </li>
+        <li>
+            Id Bicicleta: @prestamo.getIdBicicleta
+        </li>
 
-    <li>
-        Fecha Inicio Prestamo: @prestamo.getFechaInicio.toString
-    </li>
+        <li>
+            Fecha Inicio Prestamo: @prestamo.getFechaInicio.toString
+        </li>
 
-    <li>
-        Fecha Fin Prestamo: @prestamo.getFechaFin.toString
-    </li>
+        <li>
+            Fecha Fin Prestamo: @prestamo.getFechaFin.toString
+        </li>
 
-    <li>
-        Valor a pagar $: @prestamo.getValor  Pesos
-    </li>
-    @if(prestamo.getTipoPago.toString == "Tarjeta"){
-        <li>Tus kilometros recorridos son: @prestamo.getKilometraje km</li>
-        <li>Tus puntos acumulados por este trayecto son: @prestamo.getPuntos</li>
-    }
-</ul>
+        <li>
+            Valor a pagar $: @prestamo.getValor  Pesos
+        </li>
+        @if(prestamo.getTipoPago.toString == "Tarjeta"){
+            <li>Tus kilometros recorridos son: @prestamo.getKilometraje km</li>
+            <li>Tus puntos acumulados por este trayecto son: @prestamo.getPuntos</li>
+            <br><br>
+            <h2>Consulta los puntos ganados por los Km recorridos</h2>
+            <a href="../kilometraje/puntosKm?idUsuario=@prestamo.getIdUsuario">Consultar puntos</a>
+        }
 
+</body>
+</html>
