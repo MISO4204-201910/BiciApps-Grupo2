@@ -9,6 +9,7 @@ import play.mvc.Result;
 import com.co.common.repository.PuntoRepository;
 
 import javax.inject.Inject;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 
@@ -30,16 +31,25 @@ public class HomeController extends Controller {
         this.httpExecutionContext = httpExecutionContext;
     }
 
-    public Result index(){return ok("index");}
+    public Result index(){
+        if (configuracion.categorias.contains(Gamification.Recorrido)) {
+            return ok("index");
+        } else {
+            return notFound();
+        }
+    }
 
     public CompletionStage<Result> mostrarPuntos(Long idUsuario){
-        return puntoRepository.lookupByUserId(idUsuario,"Recorrido").thenApplyAsync(listaPuntos ->{
-            Long puntosUsuario=0L;
-            for (Punto punto : listaPuntos) {
-                puntosUsuario+=punto.valor;
-            }
-            return ok(views.html.recorridos.render(idUsuario,puntosUsuario));
-        }, httpExecutionContext.current());
-
+        if (configuracion.categorias.contains(Gamification.Recorrido)) {
+            return puntoRepository.lookupByUserId(idUsuario, "Recorrido").thenApplyAsync(listaPuntos -> {
+                Long puntosUsuario = 0L;
+                for (Punto punto : listaPuntos) {
+                    puntosUsuario += punto.valor;
+                }
+                return ok(views.html.recorridos.render(idUsuario, puntosUsuario));
+            }, httpExecutionContext.current());
+        } else {
+            return CompletableFuture.completedFuture(notFound());
+        }
     }
 }
