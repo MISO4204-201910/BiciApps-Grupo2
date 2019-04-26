@@ -40,16 +40,26 @@ public class HomeController extends Controller {
         this.formFactory = formFactory;
     }
 
-    public Result index(){return ok("index");}
+    public Result index(){
+        if (configuracion.categorias.contains(Gamification.Recomendaciones)) {
+            return ok("index");
+        } else {
+            return notFound();
+        }
+    }
 
     public CompletionStage<Result> mostrarPuntos(Long idUsuario){
-        return puntoRepository.lookupByUserId(idUsuario,"recomendaciones").thenApplyAsync(listaPuntos ->{
-            Long puntosUsuario=0L;
-            for (Punto punto : listaPuntos) {
-                puntosUsuario+=punto.valor;
-            }
-            return ok(views.html.recomendaciones.render(idUsuario,puntosUsuario));
-        }, httpExecutionContext.current());
+        if (configuracion.categorias.contains(Gamification.Recomendaciones)) {
+            return puntoRepository.lookupByUserId(idUsuario, "recomendaciones").thenApplyAsync(listaPuntos -> {
+                Long puntosUsuario = 0L;
+                for (Punto punto : listaPuntos) {
+                    puntosUsuario += punto.valor;
+                }
+                return ok(views.html.recomendaciones.render(idUsuario, puntosUsuario));
+            }, httpExecutionContext.current());
+        } else {
+            return CompletableFuture.completedFuture(notFound());
+        }
 
     }
 
@@ -70,19 +80,15 @@ public class HomeController extends Controller {
                     puntoDestino.valor=20L;
                     puntoRepository.insert(puntoDestino);
                     return userRepository.lookup(idUsuario).thenApplyAsync(destUser ->{
-                        if(destUser.isPresent()){
-
-                            return ok(views.html.activada.render(optUser.get(),destUser.get(),puntoDestino));
-                        }else{
-                            return notFound(views.html.notFound.render(destUser.get().id));
-                        }
+                        return destUser.map(user -> ok(views.html.activada.render(optUser.get(), user, puntoDestino)))
+                                .orElseGet(() -> notFound(views.html.notFound.render(destUser.get().id)));
                     },httpExecutionContext.current());
                 }else{
                     return CompletableFuture.completedFuture(notFound(views.html.notFound.render(idUsuario)));
                 }
             }, httpExecutionContext.current());
         }else {
-            return CompletableFuture.completedFuture(ok("Modulo no disponible"));
+            return CompletableFuture.completedFuture(notFound());
         }
     }
 }
