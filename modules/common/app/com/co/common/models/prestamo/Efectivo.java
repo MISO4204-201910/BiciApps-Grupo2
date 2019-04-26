@@ -17,5 +17,6 @@ public class Efectivo extends Prestamo {
         this.fechaFin = Instant.now();
         Duration between = Duration.between(fechaInicio, fechaFin);
         this.valor = between.getSeconds() * TARIFA_POR_SEGUNDO;
+        this.puntos = 0;
     }
 }
