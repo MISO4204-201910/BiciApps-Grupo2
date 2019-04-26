@@ -1,11 +1,12 @@
 package controllers.recorridos;
 
+import com.co.common.models.Configuracion;
 import com.co.common.models.Punto;
-import play.api.Configuration;
+import com.co.common.models.gamification.Gamification;
 import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Controller;
 import play.mvc.Result;
-import repository.PuntoRepository;
+import com.co.common.repository.PuntoRepository;
 
 import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
@@ -15,13 +16,13 @@ import java.util.concurrent.CompletionStage;
 
 public class HomeController extends Controller {
 
-    private final Configuration configuracion;
+    private final Configuracion configuracion;
     private final PuntoRepository puntoRepository;
     private final HttpExecutionContext httpExecutionContext;
 
 
     @Inject
-    public HomeController(Configuration configuracion,
+    public HomeController(Configuracion configuracion,
                           PuntoRepository puntoRepository,
                           HttpExecutionContext httpExecutionContext){
         this.configuracion = configuracion;
@@ -32,7 +33,7 @@ public class HomeController extends Controller {
     public Result index(){return ok("index");}
 
     public CompletionStage<Result> mostrarPuntos(Long idUsuario){
-        return puntoRepository.lookupByUserId(idUsuario,"recorridos").thenApplyAsync(listaPuntos ->{
+        return puntoRepository.lookupByUserId(idUsuario,"Recorrido").thenApplyAsync(listaPuntos ->{
             Long puntosUsuario=0L;
             for (Punto punto : listaPuntos) {
                 puntosUsuario+=punto.valor;

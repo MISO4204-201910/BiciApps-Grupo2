@@ -43,7 +43,7 @@ public class HomeController extends Controller {
     public Result index(){return ok("index");}
 
     public CompletionStage<Result> mostrarPuntos(Long idUsuario){
-        return puntoRepository.lookupByUserId(idUsuario,"recomendaciones").thenApplyAsync(listaPuntos ->{
+        return puntoRepository.lookupByUserId(idUsuario,"Recomendaciones").thenApplyAsync(listaPuntos ->{
             Long puntosUsuario=0L;
             for (Punto punto : listaPuntos) {
                 puntosUsuario+=punto.valor;
@@ -74,11 +74,11 @@ public class HomeController extends Controller {
 
                             return ok(views.html.activada.render(optUser.get(),destUser.get(),puntoDestino));
                         }else{
-                            return notFound(views.html.notFound.render(destUser.get().id));
+                            return notFound(com.co.common.views.html.notFound.render(destUser.get().id));
                         }
                     },httpExecutionContext.current());
                 }else{
-                    return CompletableFuture.completedFuture(notFound(views.html.notFound.render(idUsuario)));
+                    return CompletableFuture.completedFuture(notFound(com.co.common.views.html.notFound.render(idUsuario)));
                 }
             }, httpExecutionContext.current());
         }else {
