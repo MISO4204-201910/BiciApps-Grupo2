@@ -55,7 +55,7 @@ public class HomeController extends Controller {
                 for (Punto punto : listaPuntos) {
                     puntosUsuario += punto.valor;
                 }
-                return ok(views.html.recomendaciones.render(idUsuario, puntosUsuario));
+                return ok(views.html.recomendaciones.render(idUsuario, puntosUsuario,configuracion.prestamo.tipoPago));
             }, httpExecutionContext.current());
         } else {
             return CompletableFuture.completedFuture(notFound());
@@ -81,10 +81,10 @@ public class HomeController extends Controller {
                     puntoRepository.insert(puntoDestino);
                     return userRepository.lookup(idUsuario).thenApplyAsync(destUser ->{
                         return destUser.map(user -> ok(views.html.activada.render(optUser.get(), user, puntoDestino)))
-                                .orElseGet(() -> notFound(views.html.notFound.render(destUser.get().id)));
+                                .orElseGet(() -> notFound(com.co.common.views.html.notFound.render(destUser.get().id)));
                     },httpExecutionContext.current());
                 }else{
-                    return CompletableFuture.completedFuture(notFound(views.html.notFound.render(idUsuario)));
+                    return CompletableFuture.completedFuture(notFound(com.co.common.views.html.notFound.render(idUsuario)));
                 }
             }, httpExecutionContext.current());
         }else {

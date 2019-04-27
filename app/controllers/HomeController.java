@@ -5,6 +5,7 @@ import com.co.common.models.Configuracion;
 import com.co.common.models.Punto;
 import com.co.common.models.gamification.Gamification;
 import com.co.common.models.PrestamoDTO;
+import com.co.common.models.prestamo.TipoPago;
 import com.co.common.models.registro.Registro;
 import com.co.common.models.registro.TipoRegistro;
 import play.data.DynamicForm;
@@ -78,7 +79,7 @@ public class HomeController extends Controller {
                     prestamoDTO.idBicicleta = optBicicleta.get().id;
                     return prestamoRepository.insert(prestamoDTO).thenApplyAsync(a -> {
                         configuracion.prestamo.fromDto(prestamoDTO);
-                        return ok(views.html.prestamo.render(configuracion.prestamo));
+                        return ok(views.html.prestamo.render(configuracion.prestamo,configuracion.prestamo.tipoPago));
                     }, httpExecutionContext.current());
                 } else {
                     return CompletableFuture.completedFuture(notFound(views.html.notFound.render(idUsuario)));
@@ -87,11 +88,22 @@ public class HomeController extends Controller {
 
         }
 
+        public CompletionStage<Result> menu(Long idUsuario) {
+            return userRepository.lookup(idUsuario).thenApplyAsync( optUser -> {
+                if (optUser.isPresent()) {
+                    String nombreCompleto = optUser.get().nombre + " " + optUser.get().apellidos;
+                    return ok(views.html.menu.render(nombreCompleto, idUsuario,configuracion.prestamo.tipoPago, configuracion.categorias));
+                } else {
+                    return notFound(views.html.notFound.render(idUsuario));
+                }
+            }, httpExecutionContext.current());
+        }
+
         public CompletionStage<Result> prestamoIniciar(Long idUsuario) {
             return userRepository.lookup(idUsuario).thenApplyAsync( optUser -> {
                 if (optUser.isPresent()) {
                   String nombreCompleto = optUser.get().nombre + " " + optUser.get().apellidos;
-                    return ok(views.html.prestamoIniciar.render(nombreCompleto, idUsuario));
+                    return ok(views.html.prestamoIniciar.render(nombreCompleto, idUsuario,configuracion.prestamo.tipoPago));
                 } else {
                     return notFound(views.html.notFound.render(idUsuario));
                 }
@@ -123,9 +135,10 @@ public class HomeController extends Controller {
             return ok(tipoRegistro.name());
         }
 
-        public Result gamification(){
+        public Result login(){
+            TipoPago pago = configuracion.prestamo.tipoPago;
             Seq<Registro> collection = JavaConverters.asScalaIteratorConverter(configuracion.registros.iterator()).asScala().toSeq();
-            return  ok(views.html.loginBiciGov.render(collection));
+            return  ok(views.html.loginBiciGov.render(collection,pago));
         }
 
         public Result catalogoPremios(){

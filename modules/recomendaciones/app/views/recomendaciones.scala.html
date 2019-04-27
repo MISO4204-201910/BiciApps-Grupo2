@@ -1,4 +1,5 @@
-@(idUsuario: Long,puntos: Long)
+@import com.co.common.models.prestamo.TipoPago
+@(idUsuario: Long,puntos: Long, tipoPago: TipoPago)
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
     <head>
@@ -6,7 +7,7 @@
     </head>
 
     <body>
-        <h2 >Consulta tus puntos</h2>
+        <!--<h2 >Consulta tus puntos</h2>
         <h3> Hola @idUsuario</h3>
         <div class="card" style="width: 300px;">
             <img class="card-img-top" src="https://www.escueladeinternet.com/wp-content/uploads/2016/03/recomendar-marketing.png">
@@ -17,7 +18,134 @@
             </div>
         </div>
         <br><br>
-        <a href="../redimir" class="btn btn-primary">Redimir puntos</a>
+        <a href="../redimir" class="btn btn-primary">Redimir puntos</a>-->
+        <div id="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v3.2"></script>
+        <link type="css" href="css/styles.css?v=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+        <script type="application/javascript">
+            function canjear(){
+                alert("Su código ha sido canjeado.");
+                window.location.href="../menu?idUsuario=30";
+            }
+        </script>
+
+
+        <style type="text/css">
+			body, html{
+                width:100%;
+                height:100%;
+                font-family: 'Source Sans Pro', sans-serif;
+            }
+            #header{
+                height: 7%;
+                width: 100%;
+                margin:0;
+                max-width: 100% !important;
+                padding-top: 15px;
+            }
+            #banner{
+                height: 25%;
+                width: 100%;
+            }
+
+            #label{
+                height: 10%;
+                background: rgba(43,184,9,0.65);
+                width: 100%;
+                text-align: center;
+                font-size: 6em;
+                color: white;
+            }
+
+            #loginCorreo{
+                height: 25%;
+                width: 100%;
+                text-align: center;
+                font-size: 1.5em;
+                padding-top: 5%;
+                position: relative;
+            }
+
+            #loginRedes{
+                height: 25%;
+                width: 100%;
+                text-align: center;
+            }
+
+            #loginCelular{
+                padding-top: 5%;
+                height: 45%;
+                width: 100%;
+                text-align: center;
+                font-size: 3.5em;
+            }
+
+            #registrarse{
+                height: 15%;
+                width: 100%;
+                text-align: center;
+                font-size: 2.5em;
+            }
+
+            button{
+                cursor: pointer;
+            }
+
+            .abcRioButtonContentWrapper span{
+                font-size: 35px !important;
+            }
+	</style>
+
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+
+        <div id="header" class="container row">
+            <p class="col-md-5" style="color: blue; font-size: 3em;">
+			< Back
+            </p>
+            <p class="col-md-7" style="color: black; font-size: 3em;">
+
+            </p>
+        </div>
+
+        <div id="banner">
+            <div style="width:100%; height: 100%; text-align: center; padding-top: 5%;">
+                <div style="width:100%; height: 100%; text-align: center; padding-top: 5%;">
+                    @if(tipoPago == TipoPago.Gratuito) {
+                        <img style="width: 50%; max-height:90%;" src="../assets/images/logoGov.png">
+                    }
+                    @if(tipoPago == TipoPago.Efectivo){
+                        <img style="width: 50%; max-height:90%;" src="../assets/images/logoClub.png">
+                    }
+                    @if(tipoPago == TipoPago.Tarjeta){
+                        <img style="width: 50%; max-height:90%;" src="../assets/images/logoCity.png">
+                        }
+                </div>
+            </div>
+        </div>
+        <div id="label">
+            <p>Recomendaciones</p>
+        </div>
+        <div id="loginCelular">
+            <br>
+            <p>El total de tus puntos es: <strong>@puntos Puntos</strong> <br><br><br> Aquí puedes redimir tus códigos:
+		</p>
+            <div type="text" style="height: 30%; margin-top: 1px;">
+                <input type="text" style="border: 3px solid gray;" name="codigo" placeholder="Código a redimir">
+            </div>
+            <div style="margin-bottom: 2%; height: 30%;">
+                <button style="font-size: 1em;" onclick="canjear();"	 type="button" class="btn btn-success">Canjear código</button>
+            </div>
+        </div>
+        <div id="registrarse">
+
+	</div>
 
     </body>
 

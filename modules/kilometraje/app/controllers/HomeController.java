@@ -43,14 +43,14 @@ public class HomeController extends Controller {
 
     public CompletionStage<Result> mostrarPuntos(Long idUsuario){
         if (configuracion.categorias.contains(Gamification.Kilometraje)) {
-            return puntoRepository.lookupByUserId(idUsuario,"Kilometraje").thenComposeAsync(listaPuntos ->{
+            return puntoRepository.lookupByUserId(idUsuario,"recomendaciones").thenComposeAsync(listaPuntos ->{
                 return userRepository.lookup(idUsuario).thenApplyAsync(optUser ->{
                     if(optUser.isPresent()){
                         Long puntosUsuario = 0L;
                         for (Punto punto : listaPuntos) {
                             puntosUsuario+=punto.valor;
                         }
-                        return ok(views.html.kilometraje.render(optUser.get(),puntosUsuario));
+                        return ok(views.html.kilometraje.render(optUser.get(),puntosUsuario,configuracion.prestamo.tipoPago));
                     }else{
                         return ok(com.co.common.views.html.notFound.render(optUser.get().id));
                     }
@@ -61,4 +61,13 @@ public class HomeController extends Controller {
             return CompletableFuture.completedFuture(notFound());
         }
     }
+
+    public Result redimirPuntos(){
+        return ok(views.html.redimirKm.render());
+    }
+
+    public Result premios(){
+        return ok(views.html.premios.render());
+    }
+
 }

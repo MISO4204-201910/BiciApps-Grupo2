@@ -1,28 +1,21 @@
-@import com.co.common.models.User
 @import com.co.common.models.prestamo.TipoPago
-@(usuario: User,puntos: Long, tipoPago: TipoPago)
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
-    <head>
+@import com.co.common.models.gamification.Gamification
+@import java.util.ArrayList
+@(nombreUsuario: String, idUsuario: Long, tipoPago: TipoPago,gamifications:ArrayList[Gamification])
 
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+
+        <title>BiciApp</title>
+        <meta name="description" content="BiciGov Page">
+        <meta name="author" content="Grupo2">
     </head>
 
     <body>
-        <!--<h2 >Consulta tus puntos</h2>
-        <h3> Hola @usuario.nombre @usuario.apellidos</h3>
-        <div class="card" style="width: 300px;">
-            <img class="card-img-top" src="http://inrng.com/medias/img/andregreipelrouen.jpg">
-            <div class="card-body">
-                <h5 class="card-title">Puntos disponibles</h5>
-                <p class="card-text">Los puntos ganados por tus kilometros recorridos son: </p>
-                <p class="card-text" id="puntos">@puntos</p>
-            </div>
-        </div>
-        <br><br>
-        <a href="/redimir" class="btn btn-primary">Redimir puntos</a>-->
         <link type="css" href="css/styles.css?v=1.0">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
 
         <style type="text/css">
 			body, html{
@@ -62,7 +55,8 @@
                 width: 100%;
                 text-align: center;
                 padding-top: 5%;
-                font-size: 2.5em;
+                font-size: 3.5em;
+                max-width: 100%;
             }
 
             #seccionBoton{
@@ -86,8 +80,10 @@
                 padding-top: 20px;
             }
 
-            button{
+            .botonMenu{
                 cursor: pointer;
+                height: 50%;
+                font-size: 0.75em;
             }
 	</style>
 
@@ -115,32 +111,53 @@
             </p>
         </div>
         <div id="label">
-            <p>Consulta tus puntos</p>
+            <p>Menú</p>
         </div>
         <div id="labelMensaje">
-            <p>A continuación puedes ver todos los puntos <br> que has obtenido en tus recorridos</p>
+            <p>A continuación puedes ver todas las opciones <br> que tenemos para ti.</p>
         </div>
-        <div id="seccionPuntos">
-            <div style="width: 100%; height: 50%; margin: 0; max-width: 100%;" class="container row">
-                <div class="col-md-6">
-                    <img src="../assets/images/iconBici.png" style="height: 50%;">
-                    <p>
-					Puntos por Kilómetros recorridos
-                    </p>
-                </div>
-                <div class="col-md-6">
-                    <div class="point">
-                        <p>@puntos</p>
-                    </div>
-                </div>
+        <div id="seccionPuntos" class="container">
+            <div style="width: 100%; height: 50%;" class="row">
+                <div class="col-md-1">
+			    </div>
+                <button onclick="location.href = '../prestamo/iniciar?idUsuario=30';" type="button" class="botonMenu btn col-md-4 btn-primary">Prestamo de bicicletas</button>
+
+                <div class="col-md-2">
+			    </div>
+
+                @for(gamification <- gamifications) {
+
+                    @if(gamification == Gamification.Kilometraje) {
+                        <button onclick="location.href = '../kilometraje/puntosKm?idUsuario=30';" type="button" class="botonMenu btn col-md-4 btn-primary">Redimir puntos</button>
+                    }
+                    @if(gamification == Gamification.Recorrido) {
+                        <button onclick="location.href = '../recorridos/puntosRecorridos?idUsuario=30';" type="button" class="botonMenu btn col-md-4 btn-primary">Redimir puntos</button>
+                    }
+                }
+
+                <div class="col-md-1">
+			    </div>
             </div>
+
+            <div style="width: 100%; height: 50%;" class="row">
+                <div class="col-md-1">
+			</div>
+                @for(gamification <- gamifications) {
+                    @if(gamification == Gamification.Recomendaciones) {
+                        <button onclick="location.href = '../recomendaciones/puntosRecomendaciones?idUsuario=30';" type="button" class="botonMenu btn col-md-4 btn-primary">
+                            Recomendaciones</button>
+                    }
+                }
+
+                <div class="col-md-2">
+			</div>
+                <div class="col-md-1">
+			</div>
+            </div>
+
         </div>
         <div id="seccionBoton">
-            <a href="premios">
-                <button style="font-size: 1em;"	 type="button" class="btn btn-success">Redimir puntos</button>
-            </a>
-        </div>
+	</div>
 
     </body>
-
 </html>

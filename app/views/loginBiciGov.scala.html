@@ -1,7 +1,8 @@
-@import models.registro.Registro
-@import models.registro.TipoRegistro
+@import com.co.common.models.registro.Registro
+@import com.co.common.models.registro.TipoRegistro
+@import com.co.common.models.prestamo.TipoPago
 
-@(registros: Seq[Registro])
+@(registros: Seq[Registro], tipoPago: TipoPago)
 
 <!doctype html>
 <html lang="es">
@@ -11,11 +12,19 @@
   <title>BiciGov</title>
   <meta name="description" content="BiciGov Page">
   <meta name="author" content="Grupo2">
+	<meta name="google-signin-client_id" content="981566281437-ef7ia2nd7s74md0q92s28omnl17h97vu.apps.googleusercontent.com">
 </head>
 
 <body>
 	<link type="css" href="css/styles.css?v=1.0">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+	<script type="text/javascript">
+		function onSignIn(googleUser) {
+			window.location.href="../menu?idUsuario=30";
+		}
+	</script>
 
 	<style type="text/css">
 			body, html{
@@ -33,16 +42,17 @@
 				background: rgba(43,184,9,0.65);
 				width: 100%;
 				text-align: center;
-    		font-size: 6em;
-    		color: white;
+				font-size: 6em;
+				color: white;
 			}
 
 			#loginCorreo{
 				height: 25%;
 				width: 100%;
 				text-align: center;
-	    		font-size: 3.5em;
-			    padding-top: 5%;
+				font-size: 1.5em;
+				padding-top: 5%;
+				position: relative;
 			}
 
 			#loginRedes{
@@ -69,9 +79,15 @@
 			button{
 				cursor: pointer;
 			}
+
+			.abcRioButtonContentWrapper span{
+				font-size: 35px !important;
+			}
 	</style>
 
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
@@ -79,7 +95,15 @@
 
 	<div id="banner">
 		<div style="width:100%; height: 100%; text-align: center; padding-top: 5%;">
-			<img style="width: 50%; max-height:90%;" src="@routes.Assets.versioned("images/logoGov.png")">
+			@if(tipoPago == TipoPago.Gratuito) {
+				<img style="width: 50%; max-height:90%;" src="@routes.Assets.versioned("images/logoGov.png")">
+			}
+			@if(tipoPago == TipoPago.Efectivo){
+				<img style="width: 50%; max-height:90%;" src="@routes.Assets.versioned("images/logoClub.png")">
+			}
+			@if(tipoPago == TipoPago.Tarjeta){
+				<img style="width: 50%; max-height:90%;" src="@routes.Assets.versioned("images/logoCity.png")">
+			}
 		</div>
 	</div>
 	<div id="label">	
@@ -89,6 +113,12 @@
 
 	@for(registro <- registros) {
 
+		@if(registro.getRegistro == TipoRegistro.Correo) {
+			<div id="loginCorreo">
+				<div class="g-signin2" style="font-size: 35px; position:absolute; width: 400px;margin-bottom: 5%; height: 70px; top: 40%; left: 0; right: 0; margin-right: auto; margin-left: auto;" data-onsuccess="onSignIn"></div>
+			</div>
+		}
+
 		@if(registro.getRegistro == TipoRegistro.Celular) {
 			<div id="loginCelular">
 				<br/>
@@ -96,18 +126,9 @@
 					<input type="text" style="border: 3px solid gray;" name="celular" placeholder="Número de celular">
 				</div>
 				<div style="margin-bottom: 5%; height: 30%;">
-					<button style="font-size: 1em;"	 type="button" class="btn btn-success">Ingresa con tu celular</button>
-				</div>
-			</div>
-		}
-
-		@if(registro.getRegistro == TipoRegistro.Correo) {
-			<div id="loginCorreo">
-				<div style="height: 30%;">
-					<input type="text" style="border: 3px solid gray;" name="Correo" placeholder="Correo">
-				</div>
-				<div style="margin-bottom: 5%; height: 30%;">
-					<button style="font-size: 1em;"	 type="button" class="btn btn-success">Ingresar</button>
+					<a	href="../menu?idUsuario=30">
+						<button style="font-size: 1em;"	 type="button" class="btn btn-success">Ingresa con tu celular</button>
+					</a>
 				</div>
 			</div>
 		}
@@ -115,7 +136,9 @@
 		@if(registro.getRegistro == TipoRegistro.Facebook) {
 			<div id="loginRedes">
 				<br/><br/>
-				<img  src="@routes.Assets.versioned("images/redes.png")" style="height: 95%; max-width: 100%;">
+				<a	href="../menu?idUsuario=30">
+					<img  src="@routes.Assets.versioned("images/redes.png")" style="height: 95%; max-width: 100%;">
+				</a>
 			</div>
 		}
 	}

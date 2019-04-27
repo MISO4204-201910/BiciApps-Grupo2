@@ -1,4 +1,5 @@
-@(idUsuario: Long,puntos: Long)
+@import com.co.common.models.prestamo.TipoPago
+@(idUsuario: Long,puntos: Long, tipoPago: TipoPago)
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
     <head>
@@ -6,7 +7,7 @@
     </head>
 
     <body>
-        <h2 >Consulta tus puntos</h2>
+        <!--<h2 >Consulta tus puntos</h2>
         <h3> Hola @idUsuario</h3>
         <div class="card" style="width: 300px;">
             <img class="card-img-top" src="http://sombradetoro.micoope.com.ar/wp-content/uploads/sites/2/2014/05/Recomendacion-Asesores.png">
@@ -17,8 +18,127 @@
             </div>
         </div>
         <br><br>
-        <a href="../redimir" class="btn btn-primary">Redimir puntos</a>
+        <a href="../redimir" class="btn btn-primary">Redimir puntos</a>-->
+    <link type="css" href="css/styles.css?v=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+    <style type="text/css">
+            body, html{
+                width:100%;
+                height:100%;
+                font-family: 'Source Sans Pro', sans-serif;
+            }
+            #header{
+                height: 7%;
+                width: 100%;
+                margin:0;
+                max-width: 100% !important;
+                padding-top: 15px;
+            }
+
+            #label{
+                height: 10%;
+                background: rgba(43,184,9,0.65);
+                width: 100%;
+                text-align: center;
+                font-size: 6em;
+                color: white;
+            }
+
+            #labelMensaje{
+                height: 18%;
+                width: 100%;
+                text-align: center;
+                font-size: 2em;
+                padding-top: 10%;
+                position: relative;
+                max-width: 100% !important;
+            }
+
+            #seccionPuntos{
+                height: 50%;
+                width: 100%;
+                text-align: center;
+                padding-top: 5%;
+                font-size: 2.5em;
+            }
+
+            #seccionBoton{
+                padding-top: 5%;
+                height: 15%;
+                width: 100%;
+                text-align: center;
+                font-size: 3em;
+                max-width: 100%;
+            }
+
+            .point{
+                margin-left: 10%;
+                margin-top: 5%;
+                width: 60%;
+                height: 60%;
+                border: 2px solid rgba(43,184,9,0.65);
+                border-radius: 60px;
+                text-align: center;
+                font-size: 3em;
+                padding-top: 20px;
+            }
+
+            button{
+                cursor: pointer;
+            }
+    </style>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+
+
+    <div id="header" class="container row">
+        <p class="col-md-5" style="color: blue; font-size: 3em;">
+            < Back
+        </p>
+        <p class="col-md-7" style="color: black; font-size: 3em;">
+            @if(tipoPago == TipoPago.Gratuito) {
+                BiciGov
+            }
+            @if(tipoPago == TipoPago.Efectivo){
+                BiciClub
+            }
+            @if(tipoPago == TipoPago.Tarjeta){
+                BiciCity
+            }
+        </p>
+    </div>
+    <div id="label">
+        <p>Consulta tus puntos</p>
+    </div>
+    <div id="labelMensaje">
+        <p>A continuación puedes ver todos los puntos <br> que has obtenido en tus recorridos</p>
+    </div>
+    <div id="seccionPuntos">
+        <div style="width: 100%; height: 50%; margin: 0; max-width: 100%;" class="container row">
+            <div class="col-md-6">
+                <img src="../assets/images/iconMap.png" style="height: 50%;">
+                <p>
+                    Puntos por recorridos realizados
+                </p>
+            </div>
+            <div class="col-md-6">
+                <div class="point">
+                    <p>@puntos</p>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div id="seccionBoton">
+            <a href="premiosRecorrido">
+                <button style="font-size: 1em;"	 type="button" class="btn btn-success">Redimir puntos</button>
+            </a>
+        </div>
 
     </body>
-
 </html>

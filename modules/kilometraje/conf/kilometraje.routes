@@ -1,4 +1,5 @@
 GET /index                  controllers.kilometraje.HomeController.index()
 GET /puntosKm               controllers.kilometraje.HomeController.mostrarPuntos(idUsuario : Long)
-
+GET /redimirKm              controllers.kilometraje.HomeController.redimirPuntos
+GET /premios                controllers.kilometraje.HomeController.premios
 GET /assets/*file           controllers.Assets.at(path="/public/lib/myadmin", file)

@@ -11,5 +11,4 @@ public abstract class Configuracion {
     public Prestamo prestamo;
     public ArrayList<Registro> registros;
     public ArrayList<Gamification> categorias;
-
 }

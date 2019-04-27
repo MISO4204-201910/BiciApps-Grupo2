@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+
+        <title>BiciGov</title>
+        <meta name="description" content="BiciGov Page">
+        <meta name="author" content="Grupo2">
+    </head>
+
+    <body>
+        <link type="css" href="css/styles.css?v=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+        <style type="text/css">
+			body, html{
+                width:100%;
+                height:100%;
+                font-family: 'Source Sans Pro', sans-serif;
+            }
+            #header{
+                height: 7%;
+                width: 100%;
+                margin:0;
+                max-width: 100% !important;
+                padding-top: 15px;
+            }
+
+            #label{
+                height: 10%;
+                background: rgba(43,184,9,0.65);
+                width: 100%;
+                text-align: center;
+                font-size: 6em;
+                color: white;
+            }
+
+            #labelMensaje{
+                height: 18%;
+                width: 100%;
+                text-align: center;
+                font-size: 2em;
+                padding-top: 10%;
+                position: relative;
+                max-width: 100% !important;
+            }
+
+            #seccionPuntos{
+                height: 50%;
+                width: 100%;
+                text-align: center;
+                padding-top: 5%;
+                font-size: 40px;
+                margin:0;
+                max-width: 100% !important;
+            }
+
+            #seccionBoton{
+                padding-top: 5%;
+                height: 15%;
+                width: 100%;
+                text-align: center;
+                font-size: 3em;
+                max-width: 100%;
+            }
+
+            .point{
+                margin-left: 10%;
+                margin-top: 5%;
+                width: 60%;
+                height: 60%;
+                border: 2px solid rgba(43,184,9,0.65);
+                border-radius: 60px;
+                text-align: center;
+                font-size: 3em;
+                padding-top: 20px;
+            }
+
+            button{
+                cursor: pointer;
+            }
+
+            /* The container */
+            .containerCheck {
+                display: block;
+                position: relative;
+                padding-left: 35px;
+                margin-bottom: 12px;
+                cursor: pointer;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+
+            /* Hide the browser's default checkbox */
+            .containerCheck input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+                height: 0;
+                width: 0;
+            }
+
+            /* Create a custom checkbox */
+            .checkmark {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 50px;
+                width: 50px;
+                background-color: #eee;
+                margin-top: 6px;
+            }
+
+            /* On mouse-over, add a grey background color */
+            .containerCheck:hover input ~ .checkmark {
+                background-color: #ccc;
+            }
+
+            /* When the checkbox is checked, add a blue background */
+            .containerCheck input:checked ~ .checkmark {
+                background-color: #2196F3;
+            }
+
+            /* Create the checkmark/indicator (hidden when not checked) */
+            .checkmark:after {
+                content: "";
+                position: absolute;
+                display: none;
+            }
+
+            /* Show the checkmark when checked */
+            .containerCheck input:checked ~ .checkmark:after {
+                display: block;
+            }
+
+            /* Style the checkmark/indicator */
+            .containerCheck .checkmark:after {
+                left: 15px;
+                top: 2px;
+                width: 20px;
+                height: 40px;
+                border: solid white;
+                border-width: 0 10px 10px 0;
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+            }
+	</style>
+
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+
+
+        <div id="header" class="container row">
+            <p class="col-md-5" style="color: blue; font-size: 3em;">
+			< Back
+            </p>
+            <p class="col-md-7" style="color: black; font-size: 3em;">
+
+            </p>
+        </div>
+        <div id="label">
+            <p>Consulta tus puntos</p>
+        </div>
+        <div id="labelMensaje">
+            <p>Selecciona los premios que deseas canjear</p>
+            <p><strong>Total puntos: 300</strong></p>
+        </div>
+        <div id="seccionPuntos" class="container">
+            <div style="width: 50%; margin-left: 25%;">
+                <label class="containerCheck">Almuerzo - 25 Puntos
+                    <input type="checkbox" checked="checked">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="containerCheck">Gorra - 50 Puntos
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="containerCheck">Esfero - 5 Puntos
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="containerCheck">Día libre - 500 Puntos
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+
+        </div>
+        <div id="seccionBoton">
+            <a href="redimirKm">
+                <button style="font-size: 1em;"	 type="button" class="btn btn-success">Redimir puntos</button>
+            </a>
+        </div>
+
+    </body>
+</html>

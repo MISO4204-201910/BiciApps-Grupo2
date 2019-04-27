@@ -6,7 +6,7 @@ import com.co.common.models.gamification.Gamification;
 import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Controller;
 import play.mvc.Result;
-import repository.PuntoRepository;
+import com.co.common.repository.PuntoRepository;
 
 import javax.inject.Inject;
 import java.util.concurrent.CompletableFuture;
@@ -41,15 +41,23 @@ public class HomeController extends Controller {
 
     public CompletionStage<Result> mostrarPuntos(Long idUsuario){
         if (configuracion.categorias.contains(Gamification.Recorrido)) {
-            return puntoRepository.lookupByUserId(idUsuario, "recorridos").thenApplyAsync(listaPuntos -> {
+            return puntoRepository.lookupByUserId(idUsuario, "recomendaciones").thenApplyAsync(listaPuntos -> {
                 Long puntosUsuario = 0L;
                 for (Punto punto : listaPuntos) {
                     puntosUsuario += punto.valor;
                 }
-                return ok(views.html.recorridos.render(idUsuario, puntosUsuario));
+                return ok(views.html.recorridos.render(idUsuario, puntosUsuario,configuracion.prestamo.tipoPago));
             }, httpExecutionContext.current());
         } else {
             return CompletableFuture.completedFuture(notFound());
         }
+    }
+
+    public Result redimirRecorrido(){
+        return ok(views.html.redimirRecorrido.render());
+    }
+
+    public Result premiosRecorrido(){
+        return ok(views.html.premiosRecorrido.render());
     }
 }

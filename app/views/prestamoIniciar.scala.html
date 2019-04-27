@@ -1,21 +1,7 @@
-@(nombreUsuario: String, idUsuario: Long)
+@import com.co.common.models.prestamo.TipoPago
+@(nombreUsuario: String, idUsuario: Long, tipoPago: TipoPago)
 @helper.form(action = controllers.routes.HomeController.realizarPrestamo(idUsuario)) {
     @helper.CSRF.formField
-
-<!--    <h1>Prestamo Bicicletas</h1>
-
-    <ul>
-        <li>
-            Usuario: @nombreUsuario
-        </li>
-
-        <li>
-            <label for="codigo_bicicleta">Codigo Bicicleta:</label>
-            <input type="text" name="codigo_bicicleta" id="codigo_bicicleta">
-        </li>
-    </ul>
-
-    <input type="submit"  value="Realizar Prestamo" />-->
 
     <link type="css" href="css/styles.css?v=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -82,11 +68,21 @@
 
 
     <div id="header" class="container row">
-        <p class="col-md-5" style="color: blue; font-size: 3em;">
-            < Back
-        </p>
+        <a href="../menu?idUsuario=30">
+            <p class="col-md-5" style="color: blue; font-size: 3em;max-width:100%;">
+                < Back
+            </p>
+        </a>
         <p class="col-md-7" style="color: black; font-size: 3em;">
-            Usuario: @nombreUsuario
+            @if(tipoPago == TipoPago.Gratuito) {
+                BiciGov
+            }
+            @if(tipoPago == TipoPago.Efectivo){
+                BiciClub
+            }
+            @if(tipoPago == TipoPago.Tarjeta){
+                BiciCity
+            }
         </p>
     </div>
     <div id="label">

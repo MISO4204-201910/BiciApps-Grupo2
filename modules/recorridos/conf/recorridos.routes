@@ -1,4 +1,6 @@
 GET /index                  controllers.recorridos.HomeController.index()
 GET /puntosRecorridos  controllers.recorridos.HomeController.mostrarPuntos(idUsuario : Long)
+GET /premiosRecorrido  controllers.recorridos.HomeController.premiosRecorrido
+GET /redimirRecorrido  controllers.recorridos.HomeController.redimirRecorrido
 
 GET /assets/*file           controllers.Assets.at(path="/public/lib/myadmin", file)
