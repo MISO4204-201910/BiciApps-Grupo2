@@ -50,7 +50,7 @@ public class HomeController extends Controller {
 
     public CompletionStage<Result> mostrarPuntos(Long idUsuario){
         if (configuracion.categorias.contains(Gamification.Recomendaciones)) {
-            return puntoRepository.lookupByUserId(idUsuario, "recomendaciones").thenApplyAsync(listaPuntos -> {
+            return puntoRepository.lookupByUserId(idUsuario, "Recomendaciones").thenApplyAsync(listaPuntos -> {
                 Long puntosUsuario = 0L;
                 for (Punto punto : listaPuntos) {
                     puntosUsuario += punto.valor;
