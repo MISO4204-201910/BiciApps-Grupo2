@@ -38,7 +38,7 @@ def seleccionar(request):
                 easygui.msgbox("Aplicación BiciGov creada", title="BikeApp")
                 os.chdir(wd)
                 webbrowser.open_new_tab(url)
-                return HttpResponse("Archivo BiciCity Creado")
+                return HttpResponse("Archivo BiciGov Creado")
 
             elif(nombre=="BiciClub"):
                 registro = " registro{ \n Celular = true\n Facebook= false \n Correo = true\n}\n"
@@ -69,7 +69,7 @@ def seleccionar(request):
                 print("Creando aplicación BiciCity")
                 easygui.msgbox("Creando aplicación BiciCity", title="BikeApp")
                 result = subprocess.run("sbt run &", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-                print("Aplicación Creada")
+                print(str(result))
                 easygui.msgbox("Aplicación BiciCity creada", title="BikeApp")
                 os.chdir(wd)
                 webbrowser.open_new_tab(url)
