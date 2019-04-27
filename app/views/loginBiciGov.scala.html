@@ -1,4 +1,8 @@
-@()
+@import models.registro.Registro
+@import models.registro.TipoRegistro
+
+@(registros: Seq[Registro])
+
 <!doctype html>
 <html lang="es">
 <head>
@@ -12,7 +16,6 @@
 <body>
 	<link type="css" href="css/styles.css?v=1.0">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
 
 	<style type="text/css">
 			body, html{
@@ -53,7 +56,6 @@
 				height: 25%;
 				width: 100%;
 				text-align: center;
-				display: none;
 				font-size: 3.5em;
 			}
 
@@ -69,7 +71,6 @@
 			}
 	</style>
 
-
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -78,38 +79,51 @@
 
 	<div id="banner">
 		<div style="width:100%; height: 100%; text-align: center; padding-top: 5%;">
-			<img style="width: 50%; max-height:90%;" src="static/images/logoGov.png">
+			<img style="width: 50%; max-height:90%;" src="@routes.Assets.versioned("images/logoGov.png")">
 		</div>
 	</div>
 	<div id="label">	
 			<p>Iniciar Sesión</p>
 	</div>
-	<div id="loginCorreo">
-			<div style="height: 30%;">
-				<input type="text" style="border: 3px solid gray;" name="Usuario" placeholder="Usuario">
+
+
+	@for(registro <- registros) {
+
+		@if(registro.getRegistro == TipoRegistro.Celular) {
+			<div id="loginCelular">
+				<br/>
+				<div type="text" style="height: 30%; margin-top: 1px;">
+					<input type="text" style="border: 3px solid gray;" name="celular" placeholder="Número de celular">
+				</div>
+				<div style="margin-bottom: 5%; height: 30%;">
+					<button style="font-size: 1em;"	 type="button" class="btn btn-success">Ingresa con tu celular</button>
+				</div>
 			</div>
-			<div type="text" style="height: 30%; margin-top: 1px;">	
-				<input type="text" style="border: 3px solid gray;" name="Constrasena" placeholder="Contraseña">
+		}
+
+		@if(registro.getRegistro == TipoRegistro.Correo) {
+			<div id="loginCorreo">
+				<div style="height: 30%;">
+					<input type="text" style="border: 3px solid gray;" name="Correo" placeholder="Correo">
+				</div>
+				<div style="margin-bottom: 5%; height: 30%;">
+					<button style="font-size: 1em;"	 type="button" class="btn btn-success">Ingresar</button>
+				</div>
 			</div>
-			<div style="margin-bottom: 5%; height: 30%;">	
-					<button style="font-size: 1em;"	 type="button" class="btn btn-success">Aceptar</button>
+		}
+
+		@if(registro.getRegistro == TipoRegistro.Facebook) {
+			<div id="loginRedes">
+				<br/><br/>
+				<img  src="@routes.Assets.versioned("images/redes.png")" style="height: 95%; max-width: 100%;">
 			</div>
-	</div>
-	<div id="loginRedes">	
-			<img src="../../static/images/redes.png" style="height: 95%; max-width: 100%;">
-	</div>
-	<div id="loginCelular">
-		<div type="text" style="height: 30%; margin-top: 1px;">	
-			<input type="text" style="border: 3px solid gray;" name="celular" placeholder="Número de celular">
-		</div>
-		<div style="margin-bottom: 5%; height: 30%;">	
-				<button style="font-size: 1em;"	 type="button" class="btn btn-success">Ingresa con tu celular</button>
-		</div>
-	</div>
-	<div id="registrarse">	
+		}
+	}
+
+	<div id="registrarse">
 		<div style="height: 50%">
 			<p style="max-height: 95%;">
-				Si aún no tienes cuenta, 
+				Si aún no tienes cuenta,
 				<br>regístrate
 			</p>
 		</div>

@@ -25,7 +25,82 @@
 </head>
 
 <body>
-    <h2 >Consulta tus puntos</h2>
+    <link type="css" href="css/styles.css?v=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+    <style type="text/css">
+            body, html{
+                width:100%;
+                height:100%;
+                font-family: 'Source Sans Pro', sans-serif;
+            }
+            #header{
+                height: 7%;
+                width: 100%;
+                margin:0;
+                max-width: 100% !important;
+                padding-top: 15px;
+            }
+
+            #label{
+                height: 10%;
+                background: rgba(43,184,9,0.65);
+                width: 100%;
+                text-align: center;
+                font-size: 6em;
+                color: white;
+            }
+
+            #labelMensaje{
+                height: 18%;
+                width: 100%;
+                text-align: center;
+                font-size: 2em;
+                padding-top: 10%;
+                position: relative;
+                max-width: 100% !important;
+            }
+
+            #seccionPuntos{
+                height: 50%;
+                width: 100%;
+                text-align: center;
+                padding-top: 5%;
+                font-size: 2.5em;
+            }
+
+            #seccionBoton{
+                padding-top: 5%;
+                height: 15%;
+                width: 100%;
+                text-align: center;
+                font-size: 3em;
+                max-width: 100%;
+                background: blue;
+            }
+
+            .point{
+                margin-left: 10%;
+                margin-top: 5%;
+                width: 60%;
+                height: 60%;
+                border: 2px solid rgba(43,184,9,0.65);
+                border-radius: 60px;
+            }
+
+            button{
+                cursor: pointer;
+            }
+    </style>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+
+    <!--<h2 >Consulta tus puntos</h2>
     <h3>Hola Usuario @usuario</h3>
     <div class="card" style="width: 300px;">
         <img class="card-img-top" src="https://bicycledutch.files.wordpress.com/2016/01/utrecht-main-cycle-routes.jpg?w=768&h=448">
@@ -35,6 +110,50 @@
                 <p class="card-text" id="puntos">@puntos</p>
                 <a href="/redimir" class="btn btn-primary">Redimir Puntos</a>
             </div>
+    </div>-->
+
+    <div id="label">
+        <p>Préstamo Bicicleta</p>
+    </div>
+    <div id="labelMensaje">
+        <p>A continuación puedes ver todos los puntos <br> que has obtenido en tus recorridos</p>
+    </div>
+    <div id="seccionPuntos">
+        <div style="width: 100%; height: 50%; margin: 0; max-width: 100%;" class="container row">
+            <div class="col-md-6">
+                <img src="@routes.Assets.versioned("images/iconBici.png")" style="width: 80%;">
+                <p>
+                    Puntos por Kilómetros recorridos
+                </p>
+            </div>
+            <div class="col-md-6">
+                <div class="point">
+                    <strong>150</strong>
+                </div>
+            </div>
+        </div>
+        <div style="width: 100%; height: 50%; margin: 0; max-width: 100%;" class="container row">
+            <div class="col-md-6">
+                <img src="@routes.Assets.versioned("images/iconMap.png")" style="height: 55%;">
+                <p>
+                    Puntos por recorridos realizados
+                </p>
+            </div>
+            <div class="col-md-6">
+                <div class="point">
+                    <strong>150</strong>>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="seccionBoton" class="container row">
+        <div class="col-md-3"></div>
+        <div class="col-md-2">
+            <img src="@routes.Assets.versioned("images/CheckPay.png")" style="width: 100%;">
+        </div>
+        <div class="col-md-4" style="font-size: 0.8em;text-align: center;">
+            <p>Costo del servicio <br> <strong>3.500</strong></p>
+        </div>
     </div>
 
 </body>

@@ -150,7 +150,8 @@ public class HomeController extends Controller {
         }*/
 
         public Result gamification(){
-            return  ok(views.html.loginBiciGov.render());
+            Seq<Registro> collection = JavaConverters.asScalaIteratorConverter(configuracion.registros.iterator()).asScala().toSeq();
+            return  ok(views.html.loginBiciGov.render(collection));
         }
         public CompletionStage<Result> gamificationBiciGov(Long idUsuario){
             return userRepository.lookup(idUsuario).thenApplyAsync( optUser -> {
