@@ -1,15 +1,12 @@
 package controllers;
 
 
-import models.Configuracion;
-import models.Punto;
-import models.User;
-import models.prestamo.Prestamo;
-import models.PrestamoDTO;
-import models.prestamo.TipoPago;
-import models.registro.Registro;
-import models.registro.TipoRegistro;
-import play.Logger;
+import com.co.common.models.Configuracion;
+import com.co.common.models.Punto;
+import com.co.common.models.gamification.Gamification;
+import com.co.common.models.PrestamoDTO;
+import com.co.common.models.registro.Registro;
+import com.co.common.models.registro.TipoRegistro;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.i18n.MessagesApi;
@@ -17,12 +14,13 @@ import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-import respository.PuntoRepository;
-import respository.BicicletaRepository;
-import respository.PrestamoRepository;
-import respository.UserRepository;
+import com.co.common.repository.PuntoRepository;
+import com.co.common.repository.BicicletaRepository;
+import com.co.common.repository.PrestamoRepository;
+import com.co.common.repository.UserRepository;
 import scala.collection.Seq;
 import scala.collection.JavaConverters;
+import views.FinalizarPrestamoViewFactory;
 
 import javax.inject.Inject;
 import java.time.Instant;
@@ -76,7 +74,6 @@ public class HomeController extends Controller {
                 if (optBicicleta.isPresent()) {
                     PrestamoDTO prestamoDTO = new PrestamoDTO();
                     prestamoDTO.fechaInicio = Instant.now();
-                    prestamoDTO.idBicicleta = 5L;
                     prestamoDTO.idUsuario = idUsuario;
                     prestamoDTO.idBicicleta = optBicicleta.get().id;
                     return prestamoRepository.insert(prestamoDTO).thenApplyAsync(a -> {
@@ -103,29 +100,18 @@ public class HomeController extends Controller {
 
         public Result finalizarPrestamo(Long idUsuario) {
             configuracion.prestamo.finalizarViaje();
-            if (configuracion.prestamo.tipoPago == TipoPago.Efectivo) {
-                return ok(views.html.prestamoPago.render(configuracion.prestamo));
-            } else if (configuracion.prestamo.tipoPago == TipoPago.Gratuito) {
-                Punto punto = new Punto();
-                punto.id_usuario=idUsuario;
-                punto.categoria="recorridos";
-                punto.valor= Long.valueOf(configuracion.prestamo.getPuntos());
-                puntoRepository.insert(punto);
-                return ok(views.html.prestamoGratuito.render(configuracion.prestamo));
-            } else if(configuracion.prestamo.tipoPago == TipoPago.Tarjeta) {
-                Punto punto = new Punto();
-                punto.id_usuario=idUsuario;
-                punto.categoria="kilometraje";
-                punto.valor= Long.valueOf(configuracion.prestamo.getPuntos());
-                puntoRepository.insert(punto);
-                puntoRepository.lookupByUserId(idUsuario).thenApplyAsync(listaPuntos ->{
-                   System.out.println(listaPuntos.get(0).valor);
-                   return null;
-                }, httpExecutionContext.current());
-                return ok(views.html.prestamoPago.render(configuracion.prestamo));
-            }else{
-                return ok("Pago no encontrado");
+
+            for(Gamification categoria : configuracion.categorias) {
+                if(categoria!=Gamification.Recomendaciones) {
+                    Punto punto = new Punto();
+                    punto.id_usuario = idUsuario;
+                    punto.categoria = categoria.name();
+                    System.out.println("categoria de punto: " + punto.categoria);
+                    punto.valor = Long.valueOf(configuracion.prestamo.getPuntos());
+                    puntoRepository.insert(punto);
+                }
             }
+            return FinalizarPrestamoViewFactory.crear(configuracion.prestamo, configuracion.categorias);
         }
 
         public Result registro() {
@@ -137,45 +123,16 @@ public class HomeController extends Controller {
             return ok(tipoRegistro.name());
         }
 
-        /*public Result registroFacebook() {
-            return ok("Registro facebook");
-        }
-
-        public Result registroTelefono() {
-            return ok("Registro telefono");
-        }
-
-        public Result registroCorreo() {
-           return ok("Registro correo");
-        }*/
-
         public Result gamification(){
             Seq<Registro> collection = JavaConverters.asScalaIteratorConverter(configuracion.registros.iterator()).asScala().toSeq();
             return  ok(views.html.loginBiciGov.render(collection));
         }
-        public CompletionStage<Result> gamificationBiciGov(Long idUsuario){
-            return userRepository.lookup(idUsuario).thenApplyAsync( optUser -> {
-                if (optUser.isPresent()) {
-                    String nombreCompleto = optUser.get().nombre + " " + optUser.get().apellidos;
-                    Integer puntos = optUser.get().puntos;
-                    return ok(views.html.gamificationBiciGov.render(nombreCompleto, puntos));
-                } else {
-                    return notFound(views.html.notFound.render(idUsuario));
-                }
-            }, httpExecutionContext.current());
-        }
-        public CompletionStage<Result> gamificationBiciCity(Long idUsuario){
-            return userRepository.lookup(idUsuario).thenApplyAsync( optUser -> {
-                if (optUser.isPresent()) {
-                    String nombreCompleto = optUser.get().nombre + " " + optUser.get().apellidos;
-                    Integer puntos = optUser.get().puntos;
-                    return ok(views.html.gamificationBiciCity.render(nombreCompleto, puntos));
-                } else {
-                    return notFound(views.html.notFound.render(idUsuario));
-                }
-            }, httpExecutionContext.current());
-        }
+
         public Result catalogoPremios(){
             return ok(views.html.catalogoPremios.render());
+        }
+
+        public Result recomendar(Long idUsuario){
+            return ok(views.html.pasaCodigo.render(idUsuario));
         }
     }

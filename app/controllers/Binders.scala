@@ -1,6 +1,6 @@
 package controllers
 
-import models.registro.TipoRegistro
+import com.co.common.models.registro.TipoRegistro
 import play.api.mvc.QueryStringBindable
 
 object Binders {

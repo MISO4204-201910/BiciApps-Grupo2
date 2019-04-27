@@ -1,0 +1,14 @@
+@(idUsuario : Long)
+@helper.form(action = controllers.recomendaciones.routes.HomeController.activarRecomendacion(idUsuario)) {
+    @helper.CSRF.formField
+    <h1>Codigo Recomendacion</h1>
+
+    <ul>
+        <li>
+            <label for="codigo_recomendacion">Codigo Recomendacion:</label>
+            <input type="text" name="codigo_recomendacion" id="codigo_recomendacion">
+        </li>
+    </ul>
+
+    <input type="submit"  value="Enviar Codigo" />
+}
