@@ -148,4 +148,8 @@ public class HomeController extends Controller {
         public Result recomendar(Long idUsuario){
             return ok(views.html.pasaCodigo.render(idUsuario));
         }
+
+        public Result registrarTarjeta() {
+            return ok(views.html.registrarTarjeta.render(configuracion.prestamo.tipoPago));
+        }
     }
