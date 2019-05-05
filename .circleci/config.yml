@@ -1,8 +1,14 @@
 version: 2
 jobs:
-  build:
-    docker: # use the docker executor type; machine and macos executors are also supported
-      - image: circleci/node:4.8.2 # the primary container, where your job's commands are run
-    steps:
-      - checkout # check out the code in the project directory
-      - run: sbt test # run all the projects test
+build:
+docker:
+      - image: circleci/openjdk:8-jdk
+steps:
+      - checkout
+      - restore_cache:
+key: scala-library-dependencies-{{ checksum "build.sbt" }}
+      - run: sbt test:compile
+      - save_cache:
+paths: [ "~/.m2", "~/.ivy2", "~/.cache/coursier" ]
+key: scala-library-dependencies-{{ checksum "build.sbt" }}
+      - run: sbt test
