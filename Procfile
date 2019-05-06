@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/play-getting-started -Dhttp.port=${PORT} -Dconfig.resource=${?CONFIG_FILE}
+web: target/universal/stage/bin/play-getting-started -Dhttp.port=${PORT} -Dconfig.resource=${CONFIG_FILE}
