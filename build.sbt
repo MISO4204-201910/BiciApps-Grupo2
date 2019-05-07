@@ -29,5 +29,3 @@ routesImport ++= Seq("com.co.common.models.registro._", "controllers.Binders._")
 playEbeanModels in Compile := Seq("com.co.common.models.*")
 
 testOptions in Test += Tests.Argument(TestFrameworks.JUnit, "-a", "-v")
-
-scalacOptions ++= Seq("-Xmax-classfile-name", "240")
