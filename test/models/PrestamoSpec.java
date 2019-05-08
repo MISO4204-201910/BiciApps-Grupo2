@@ -48,7 +48,7 @@ public class PrestamoSpec {
         Prestamo pretamo = PrestamoFactory.crear(TipoPago.Tarjeta);
         Thread.sleep(2000);
         pretamo.finalizarViaje();
-        assertTrue(pretamo.getValor() < 0D);
+        assertTrue(pretamo.getValor() > 0D);
     }
 
 }
